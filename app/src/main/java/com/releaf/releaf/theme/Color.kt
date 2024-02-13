@@ -1,4 +1,4 @@
-package com.releaf.releaf.activity.ui.theme
+package com.releaf.releaf.theme
 
 import androidx.compose.ui.graphics.Color
 

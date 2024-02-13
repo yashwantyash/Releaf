@@ -1,4 +1,4 @@
-package com.releaf.releaf.activity.ui.theme
+package com.releaf.releaf.theme
 
 import android.app.Activity
 import android.os.Build
