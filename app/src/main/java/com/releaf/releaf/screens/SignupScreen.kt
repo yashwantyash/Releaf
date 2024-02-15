@@ -1,5 +1,6 @@
 package com.releaf.releaf.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,16 +13,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,34 +37,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.database
 import com.releaf.releaf.R
-import com.releaf.releaf.composables.MyInputField
-import com.releaf.releaf.composables.MyNormalText
-import com.releaf.releaf.composables.SignupBtn
-import com.releaf.releaf.composables.UnderlinedText
 import com.releaf.releaf.theme.ReLeafTheme
-
-/*
-class SignupActivity : ComponentActivity() {
-override fun onCreate(savedInstanceState: Bundle?) {
-super.onCreate(savedInstanceState)
-setContent {
-ReLeafTheme {
-// A surface container using the 'background' color from the theme
-Surface(
-modifier = Modifier.fillMaxSize(),
-color = MaterialTheme.colorScheme.background
-) {
-SignupScreen()
-}
-}
-}
-}
-}
-*/
+import com.releaf.releaf.utility.MyInputField
+import com.releaf.releaf.utility.MyNormalText
+import com.releaf.releaf.utility.SignupBtn
+import com.releaf.releaf.utility.UnderlinedText
+import com.releaf.releaf.utility.User
 
 @Composable
 fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
+    var isCreatingAccount by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    val auth = FirebaseAuth.getInstance()
+    val database = Firebase.database
+
     Box {
         Column(
             verticalArrangement = Arrangement.Top,
@@ -66,8 +69,7 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.box),
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
 //                .scale(scaleX = 1f, scaleY = 2f)
             )
 
@@ -102,28 +104,94 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(48.dp)
         ) {
-            MyInputField(label = R.string.outline_text1, leadIcon = Icons.Default.Person)
+
+            MyInputField(
+                label = R.string.fullname,
+                leadIcon = Icons.Default.Person,
+                keyboardType = KeyboardType.Text
+            ) {
+                fullName = it
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
-            MyInputField(label = R.string.outline_address, leadIcon = Icons.Default.Home)
+
+            MyInputField(
+                label = R.string.phone,
+                leadIcon = Icons.Default.Phone,
+                keyboardType = KeyboardType.Phone
+            ) {
+                phone = it
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            MyInputField(
+                label = R.string.email,
+                leadIcon = Icons.Default.Email,
+                keyboardType = KeyboardType.Text
+            ) {
+                email = it
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
             MyInputField(
                 label = R.string.password_txt,
                 leadIcon = Icons.Default.Lock,
                 keyboardType = KeyboardType.Password
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            MyInputField(
-                label = R.string.password_txt_confirm,
-                leadIcon = Icons.Default.Lock,
-                keyboardType = KeyboardType.Password
-            )
+            ) {
+                password = it
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
-            SignupBtn(btnTxtId = R.string.btn_text_signup, navController, "home")
+
+            if (isCreatingAccount) {
+                LinearProgressIndicator()
+            } else {
+                SignupBtn(
+                    btnTxtId = R.string.btn_text_signup, navController, "home"
+                ) {
+                    if (fullName.isNotEmpty() && phone.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                        isCreatingAccount = true
+                        auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val user = auth.currentUser
+                                    val userId = user?.uid ?: ""
+                                    val userRef = database.reference.child("user").child(userId)
+                                    userRef.setValue(User(fullName, phone, email))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(context,"Registration Successful", Toast.LENGTH_SHORT).show()
+                                            navController.navigate("home")
+                                        }.addOnFailureListener {exception ->
+                                            val errorMessage = exception.localizedMessage ?: "An error occurred"
+                                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)                                                .show()
+                                        }
+                                } else {
+//                                    Toast.makeText(context, "Registration Not Successful", Toast.LENGTH_SHORT).show()
+                                    // Registration failed
+                                    task.exception?.let { exception ->
+                                        // Handle other registration errors
+                                        val errorMessage = exception.localizedMessage ?: "An error occurred"
+                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                    }
+                                    isCreatingAccount = false
+                                }
+                            }
+                    } else {
+                        Toast.makeText(context, "No field should be Empty!", Toast.LENGTH_SHORT)                            .show()
+
+                    }
+                }
+            }
+
             Spacer(modifier = Modifier.height(18.dp))
+
             Row {
                 MyNormalText(valueId = R.string.ask_signin)
                 Spacer(modifier = Modifier.width(8.dp))
-                UnderlinedText(value = "Log In", navController = navController, desScreen = "login")
+                UnderlinedText(
+                    value = "Log In", navController = navController, desScreen = "login"
+                )
             }
         }
     }

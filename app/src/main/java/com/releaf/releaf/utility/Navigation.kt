@@ -1,4 +1,4 @@
-package com.releaf.releaf
+package com.releaf.releaf.utility
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

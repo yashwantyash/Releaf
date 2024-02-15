@@ -1,4 +1,4 @@
-package com.releaf.releaf.composables
+package com.releaf.releaf.utility
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -64,12 +64,18 @@ fun LogoAndName(name: String) {
 }
 
 @Composable
-fun MyInputField(label: Int, leadIcon: ImageVector, keyboardType: KeyboardType= KeyboardType.Text) {
+fun MyInputField(
+    label: Int,
+    leadIcon: ImageVector,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onValueChange: (String) -> Unit
+) {
     var textValue by remember { mutableStateOf("") }
     OutlinedTextField(
         value = textValue,
         onValueChange = {
             textValue = it
+            onValueChange(it)
         },
         modifier = Modifier
             .fillMaxWidth(),
@@ -102,24 +108,17 @@ fun MyInputField(label: Int, leadIcon: ImageVector, keyboardType: KeyboardType= 
 }
 
 @Composable
-fun SigninBtn(btnTxtId: Int, navController: NavController, destinationScreen:String){
+fun SigninBtn(
+    btnTxtId: Int,
+    navController: NavController,
+    destinationScreen: String,
+    onClick: () -> Unit
+) {
     Button(
-        onClick = {  navController.navigate(destinationScreen) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 0.dp),
-        shape = RoundedCornerShape(10.dp)
-    )
-    {
-        Text(
-            text = stringResource(id = btnTxtId),
-            fontSize = 18.sp
-        )
-    }
-}@Composable
-fun SignupBtn(btnTxtId: Int, navController: NavController, destinationScreen:String){
-    Button(
-        onClick = {  navController.navigate(destinationScreen) },
+        onClick = {
+            onClick()
+//            navController.navigate(destinationScreen)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 0.dp),
@@ -132,8 +131,39 @@ fun SignupBtn(btnTxtId: Int, navController: NavController, destinationScreen:Str
         )
     }
 }
+
 @Composable
-fun UnderlinedText(txtSize: TextUnit=16.sp, value: String, navController: NavController, desScreen: String){
+fun SignupBtn(
+    btnTxtId: Int,
+    navController: NavController,
+    destinationScreen: String,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = {
+            onClick()
+//            navController.navigate(destinationScreen)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 0.dp),
+        shape = RoundedCornerShape(10.dp)
+    )
+    {
+        Text(
+            text = stringResource(id = btnTxtId),
+            fontSize = 18.sp
+        )
+    }
+}
+
+@Composable
+fun UnderlinedText(
+    txtSize: TextUnit = 16.sp,
+    value: String,
+    navController: NavController,
+    desScreen: String
+) {
     Text(
         text = value,
         fontSize = txtSize,
@@ -142,12 +172,12 @@ fun UnderlinedText(txtSize: TextUnit=16.sp, value: String, navController: NavCon
         modifier = Modifier
             .clickable {
                 navController.navigate(desScreen)
-        }
+            }
     )
 }
 
 @Composable
-fun MyNormalText(valueId:Int, txtSize: TextUnit = 16.sp){
+fun MyNormalText(valueId: Int, txtSize: TextUnit = 16.sp) {
     Text(
         text = stringResource(id = valueId),
         fontSize = txtSize
