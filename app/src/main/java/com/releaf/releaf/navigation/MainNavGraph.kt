@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.releaf.releaf.navigation.homeNavGraph
 import com.releaf.releaf.screens.BottomScreen.CommunityScreen
 import com.releaf.releaf.screens.BottomScreen.HomeScreen
 import com.releaf.releaf.screens.BottomScreen.JournalScreen
@@ -17,14 +18,14 @@ import com.releaf.releaf.utility.NavConst.PROFILE
 import com.releaf.releaf.utility.NavConst.PROGRESS
 
 @Composable
-fun BottomNavGraph(navController: NavHostController) {
+fun MainNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = MAIN_ROUTE,
         startDestination = HOME
     ) {
         composable(route = HOME) {
-            HomeScreen()
+            HomeScreen(navController = navController)
         }
         composable(route = PROGRESS) {
             ProgressScreen()
@@ -38,5 +39,6 @@ fun BottomNavGraph(navController: NavHostController) {
         composable(route = PROFILE) {
             ProfileScreen()
         }
+        homeNavGraph(navController = navController)
     }
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.reyaz.bottomnavigation.BottomBarScreenObj
-import com.reyaz.bottomnavigation.BottomNavGraph
+import com.reyaz.bottomnavigation.MainNavGraph
 
 @Composable
 fun MainScreen( navController: NavHostController = rememberNavController() ) {
@@ -29,7 +29,7 @@ fun MainScreen( navController: NavHostController = rememberNavController() ) {
         bottomBar = { MyBottomBar(navController = navController) }
     ) {
         it
-        BottomNavGraph(navController = navController)
+        MainNavGraph(navController = navController)
     }
 }
 
@@ -47,7 +47,6 @@ fun MyBottomBar(navController: NavHostController) {
         BottomBarScreenObj.Community,
         BottomBarScreenObj.Profile,
     )
-
 
     NavigationBar(
         modifier = Modifier

@@ -12,4 +12,8 @@ object NavConst {
     const val ROOT_ROUTE = "root_route"
     const val LOGIN = "login"
     const val SIGNUP = "signup"
+    const val HOME_FEAT_ROUTE = "homeFeatureRoute"
+    const val CHECKIN = "checkIn"
+    const val ADD_JOURNAL = "addJournal"
+    const val SUPPORT = "support"
 }

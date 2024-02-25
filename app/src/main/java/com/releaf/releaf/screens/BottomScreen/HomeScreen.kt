@@ -2,6 +2,7 @@ package com.releaf.releaf.screens.BottomScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,12 +34,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
 import com.releaf.releaf.theme.ReLeafTheme
+import com.releaf.releaf.utility.NavConst.CHECKIN
 
 @Composable
 fun HomeScreen(
-//    navController: NavController
+    navController: NavHostController
 ) {
     Box(
         modifier = Modifier.fillMaxWidth()
@@ -97,9 +102,13 @@ fun HomeScreen(
                 fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                 fontStyle = FontStyle.Italic
             )
+
             Spacer(modifier = Modifier.height(64.dp))
+
             HomeFeature(
-                onClick = {},
+                onClick = {
+                          navController.navigate(CHECKIN)
+                },
                 title = "Daily CheckIn",
                 subtitle = "Set an intention for your day"
             )
@@ -120,13 +129,7 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeScreenPreview() {
-    ReLeafTheme {
-        HomeScreen()
-    }
-}
+
 
 @Composable
 fun HomeFeature(
@@ -137,12 +140,15 @@ fun HomeFeature(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+//            .clickable { onClick() }
             .padding(start = 32.dp, end = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween // Shifts items to the start and end
 //        horizontalArrangement = Arrangement.Center // Center horizontally
     ) {
-        Column {
+        Column(
+            modifier = Modifier.clickable { onClick() }
+        ) {
             Text(
                 text = title,
                 fontWeight = FontWeight.Bold,
@@ -165,6 +171,15 @@ fun HomeFeature(
                 .size(40.dp)
                 .clip(shape = CircleShape)
                 .background(MaterialTheme.colorScheme.secondaryContainer)
+                .clickable { onClick() }
         )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun HomeScreenPreview() {
+    ReLeafTheme {
+        HomeScreen(navController = rememberNavController())
     }
 }
