@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "287308816449",
+    "project_id": "releaf-1ceb3",
+    "storage_bucket": "releaf-1ceb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287308816449:android:78b688fef2d6a7ae6aa6c0",
+        "android_client_info": {
+          "package_name": "com.releaf.releaf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrOluSWCQnPBK8baiLqcFcndG-lffblow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

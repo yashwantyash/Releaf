@@ -1,7 +1,9 @@
 package com.releaf.releaf.utility
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -103,7 +107,7 @@ fun MyInputField(
                     Icon(Icons.Default.Clear, contentDescription = null)
                 }
             }
-        }
+        },
     )
 }
 
@@ -182,6 +186,41 @@ fun MyNormalText(valueId: Int, txtSize: TextUnit = 16.sp) {
         text = stringResource(id = valueId),
         fontSize = txtSize
     )
+}
+
+@Composable
+fun Header(
+    title: String
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp)
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .padding(top = 16.dp, start = 10.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(start = 16.dp).align(Alignment.BottomStart),
+                text = title,
+                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Image(
+            painter = painterResource(id = R.drawable.releaf_wave),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .rotate(180f),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primaryContainer)
+        )
+
+    }
 }
 
 
