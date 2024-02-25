@@ -2,19 +2,21 @@ package com.releaf.releaf.screens.feature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -32,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,7 +50,7 @@ fun CheckIn(
     navController: NavHostController = rememberNavController()
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Header(title = "Morning Checkin")
@@ -130,18 +133,57 @@ fun CheckIn(
             ),
         )
 
-        Spacer(modifier = Modifier.weight(1f))
-        Text(modifier = Modifier.padding(horizontal = 16.dp),
-             text = "\"Don't Let yesterday take up too much of today\"",
-             fontSize = 24.sp,
-             textAlign = TextAlign.Center,
-             fontStyle = FontStyle.Italic,
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "\"Don't Let yesterday take up too much of today\"",
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center,
+            fontStyle = FontStyle.Italic,
 
 //             textDecoration = TextDecoration.Underline
 
         )
-        Spacer(modifier = Modifier.weight(2f))
+        Spacer(modifier = Modifier.weight(1f))
 
+
+        Row(
+            Modifier.padding(horizontal = 32.dp),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            OutlinedButton(
+                onClick = { /*TODO*/ },
+                shape = RoundedCornerShape(10.dp)
+
+                ) {
+                Text(
+                    text = "Back",
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                    fontSize = 18.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Button(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .clip(RoundedCornerShape(10.dp)
+                    ),
+
+                onClick = { /*TODO*/ },
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                    text = "Save",
+                    fontSize = 18.sp,
+                )
+
+            }
+
+        }
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
@@ -161,6 +203,15 @@ fun Emoji(
         Text(text = subtitle, fontSize = 16.sp, modifier = Modifier.padding(top = 8.dp))
     }
 }
+//
+//@Composable
+//fun MyButton(
+//    text: String,
+//    onClick: () -> Unit = {},
+//    contentColor: Color = MaterialTheme.colorScheme.primary,
+//) {
+//
+//}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
