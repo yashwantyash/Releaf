@@ -1,4 +1,4 @@
-package com.releaf.releaf.screens
+package com.releaf.releaf.screens.AuthScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -164,11 +164,9 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
                                             navController.navigate("home")
                                         }.addOnFailureListener {exception ->
                                             val errorMessage = exception.localizedMessage ?: "An error occurred"
-                                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)                                                .show()
+                                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                                         }
                                 } else {
-//                                    Toast.makeText(context, "Registration Not Successful", Toast.LENGTH_SHORT).show()
-                                    // Registration failed
                                     task.exception?.let { exception ->
                                         // Handle other registration errors
                                         val errorMessage = exception.localizedMessage ?: "An error occurred"
@@ -178,7 +176,7 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
                                 }
                             }
                     } else {
-                        Toast.makeText(context, "No field should be Empty!", Toast.LENGTH_SHORT)                            .show()
+                        Toast.makeText(context, "No field should be Empty!", Toast.LENGTH_SHORT).show()
 
                     }
                 }

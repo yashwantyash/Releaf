@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -18,16 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.reyaz.bottomnavigation.BottomBarScreen
+import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.BottomNavGraph
 
 @Composable
-fun MainScreen() {
-    val navController = rememberNavController()
+fun MainScreen( navController: NavHostController = rememberNavController() ) {
     Scaffold(
         bottomBar = { MyBottomBar(navController = navController) }
     ) {
@@ -44,12 +41,14 @@ fun MyBottomBar(navController: NavHostController) {
     }
 
     val screensList = listOf(
-        BottomBarScreen.Home,
-        BottomBarScreen.Progress,
-        BottomBarScreen.Journal,
-        BottomBarScreen.Community,
-        BottomBarScreen.Profile,
+        BottomBarScreenObj.Home,
+        BottomBarScreenObj.Progress,
+        BottomBarScreenObj.Journal,
+        BottomBarScreenObj.Community,
+        BottomBarScreenObj.Profile,
     )
+
+
     NavigationBar(
         modifier = Modifier
             .padding(8.dp)

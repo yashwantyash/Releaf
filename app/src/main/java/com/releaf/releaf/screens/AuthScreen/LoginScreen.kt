@@ -1,4 +1,4 @@
-package com.releaf.releaf.screens
+package com.releaf.releaf.screens.AuthScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +33,8 @@ import com.releaf.releaf.ui.theme.ReLeafTheme
 import com.releaf.releaf.utility.LogoAndName
 import com.releaf.releaf.utility.MyInputField
 import com.releaf.releaf.utility.MyNormalText
+import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
+import com.releaf.releaf.utility.NavConst.SIGNUP
 import com.releaf.releaf.utility.SigninBtn
 import com.releaf.releaf.utility.UnderlinedText
 
@@ -84,7 +86,7 @@ fun LoginScreen(
             SigninBtn(
                 R.string.login_button,
                 navController,
-                "home"
+                ""
             )
             {
                 if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -95,7 +97,7 @@ fun LoginScreen(
                             if (task.isSuccessful) {
                                 Toast.makeText(context, "User Authenticated", Toast.LENGTH_SHORT)
                                     .show()
-                                navController.navigate("home")
+                                navController.navigate(MAIN_ROUTE)
                             } else {
 //                                Toast.makeText(context, "User Not Found", Toast.LENGTH_SHORT).show()
                                 task.exception?.let { exception ->
@@ -120,7 +122,7 @@ fun LoginScreen(
             UnderlinedText(
                 value = "Register Now!",
                 navController = navController,
-                desScreen = "signup"
+                desScreen = SIGNUP
             )
         }
         Spacer(modifier = Modifier.height(100.dp))
