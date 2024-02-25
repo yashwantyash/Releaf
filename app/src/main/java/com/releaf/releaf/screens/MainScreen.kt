@@ -17,9 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.releaf.releaf.R
 import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.MainNavGraph
 
@@ -47,37 +52,52 @@ fun MyBottomBar(navController: NavHostController) {
         BottomBarScreenObj.Community,
         BottomBarScreenObj.Profile,
     )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar(
+    val bottomBarDestination = screensList.any { it.route == currentDestination?.route }
+    if (bottomBarDestination) {
+
+        NavigationBar(
         modifier = Modifier
             .padding(8.dp)
             .clip(RoundedCornerShape(20.dp)),
 //        containerColor = MaterialTheme.colorScheme.surface
     ) {
-        screensList.forEachIndexed { index, screensListItem ->
-            NavigationBarItem(
-                modifier = Modifier
-                    .size(90.dp)
-                    .padding(top = 0.dp),
-                selected = selectedIndex == index,
-                onClick = {
-                    navController.navigate(screensListItem.route) {
-                        popUpTo(0)
-                    }
-                    selectedIndex = index
-                },
-                icon = {
-                    Icon(imageVector = screensListItem.icon, contentDescription = null)
-                },
-                label = {
-                    Text(text = screensListItem.title)
-                },
-                alwaysShowLabel = false,
-                colors = NavigationBarItemDefaults.colors(
+            screensList.forEachIndexed { index, screensListItem ->
+                NavigationBarItem(
+                    modifier = Modifier
+                        .size(90.dp)
+                        .padding(top = 0.dp),
+//                    selected = selectedIndex == index,
+                    onClick = {
+
+                        navController.navigate(screensListItem.route) {
+                            popUpTo(navController.graph.findStartDestination().id)
+                            launchSingleTop = true
+                        }
+                    },
+                    selected = currentDestination?.hierarchy?.any {
+                        it.route == screensListItem.route
+                    } == true,
+
+                    icon = {
+                        Icon(
+                            painterResource(screensListItem.icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(30.dp)
+                        )
+                    },
+                    label = {
+                        Text(text = screensListItem.title)
+                    },
+                    alwaysShowLabel = false,
+                    colors = NavigationBarItemDefaults.colors(
 //                    indicatorColor = Color.Transparent
 //                    unselectedIconColor = Color.Gray
+                    )
                 )
-            )
+            }
         }
     }
 }

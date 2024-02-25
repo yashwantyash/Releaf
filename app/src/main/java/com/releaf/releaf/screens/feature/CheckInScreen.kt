@@ -2,6 +2,7 @@ package com.releaf.releaf.screens.feature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -118,7 +119,7 @@ fun CheckIn(
 
             label = {
                 Text(
-                    text = "my intention for today is",
+                    text = "My intention for today is",
                     fontSize = 18.sp
                 )
             },
