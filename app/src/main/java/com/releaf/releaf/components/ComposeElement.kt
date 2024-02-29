@@ -1,4 +1,4 @@
-package com.releaf.releaf.utility
+package com.releaf.releaf.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -187,40 +187,4 @@ fun MyNormalText(valueId: Int, txtSize: TextUnit = 16.sp) {
         fontSize = txtSize
     )
 }
-
-@Composable
-fun Header(
-    title: String
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(top = 16.dp, start = 10.dp)
-        ) {
-            Text(
-                modifier = Modifier.padding(start = 16.dp).align(Alignment.BottomStart),
-                text = title,
-                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        Image(
-            painter = painterResource(id = R.drawable.releaf_wave),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .rotate(180f),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primaryContainer)
-        )
-
-    }
-}
-
 

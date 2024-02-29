@@ -15,5 +15,6 @@ object NavConst {
     const val HOME_FEAT_ROUTE = "homeFeatureRoute"
     const val CHECKIN = "checkIn"
     const val ADD_JOURNAL = "addJournal"
+    const val ADD_JOURNAL_CHECKBOX = "addJournalCheckbox"
     const val SUPPORT = "support"
 }

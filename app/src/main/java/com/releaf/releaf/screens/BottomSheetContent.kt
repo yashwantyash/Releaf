@@ -1,4 +1,4 @@
-package com.releaf.releaf
+package com.releaf.releaf.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

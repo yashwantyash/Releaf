@@ -42,10 +42,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
 import com.releaf.releaf.R
 import com.releaf.releaf.theme.ReLeafTheme
-import com.releaf.releaf.utility.MyInputField
-import com.releaf.releaf.utility.MyNormalText
-import com.releaf.releaf.utility.SignupBtn
-import com.releaf.releaf.utility.UnderlinedText
+import com.releaf.releaf.components.MyInputField
+import com.releaf.releaf.components.MyNormalText
+import com.releaf.releaf.components.SignupBtn
+import com.releaf.releaf.components.UnderlinedText
 import com.releaf.releaf.utility.User
 
 @Composable

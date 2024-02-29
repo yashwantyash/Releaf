@@ -1,4 +1,4 @@
-package com.releaf.releaf.screens.feature
+package com.releaf.releaf.screens.homefeature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -27,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -42,18 +43,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
+import com.releaf.releaf.components.OutFillBtn
 import com.releaf.releaf.theme.ReLeafTheme
-import com.releaf.releaf.utility.Header
+import com.releaf.releaf.components.WavyTitle
 
 @Composable
 fun CheckIn(
     navController: NavHostController = rememberNavController()
 ) {
+    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Header(title = "Morning Checkin")
+        WavyTitle(title = "Morning Checkin")
         Text(
             text = "It's a new day! How do you feel?",
             fontWeight = FontWeight.Bold,
@@ -144,45 +147,16 @@ fun CheckIn(
 //             textDecoration = TextDecoration.Underline
 
         )
+        Spacer(modifier = Modifier.height(32.dp))
         Spacer(modifier = Modifier.weight(1f))
 
+            OutFillBtn(
+                textOutl = "Back",
+                outOnClick = {},
+                fillOnClick = {},
+                txtFill = "Save"
+            )
 
-        Row(
-            Modifier.padding(horizontal = 32.dp),
-            verticalAlignment = Alignment.Bottom
-        ) {
-            OutlinedButton(
-                onClick = { /*TODO*/ },
-                shape = RoundedCornerShape(10.dp)
-
-                ) {
-                Text(
-                    text = "Back",
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                    fontSize = 18.sp
-                )
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(10.dp)
-                    ),
-
-                onClick = { /*TODO*/ },
-                shape = RoundedCornerShape(10.dp)
-            ) {
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                    text = "Save",
-                    fontSize = 18.sp,
-                )
-
-            }
-
-        }
         Spacer(modifier = Modifier.height(24.dp))
     }
 }

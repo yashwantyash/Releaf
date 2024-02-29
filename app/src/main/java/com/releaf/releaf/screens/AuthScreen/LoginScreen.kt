@@ -30,13 +30,13 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.releaf.releaf.R
 import com.releaf.releaf.ui.theme.ReLeafTheme
-import com.releaf.releaf.utility.LogoAndName
-import com.releaf.releaf.utility.MyInputField
-import com.releaf.releaf.utility.MyNormalText
+import com.releaf.releaf.components.LogoAndName
+import com.releaf.releaf.components.MyInputField
+import com.releaf.releaf.components.MyNormalText
 import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
 import com.releaf.releaf.utility.NavConst.SIGNUP
-import com.releaf.releaf.utility.SigninBtn
-import com.releaf.releaf.utility.UnderlinedText
+import com.releaf.releaf.components.SigninBtn
+import com.releaf.releaf.components.UnderlinedText
 
 @Composable
 fun LoginScreen(

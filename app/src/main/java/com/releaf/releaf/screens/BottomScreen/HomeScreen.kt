@@ -39,6 +39,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
 import com.releaf.releaf.theme.ReLeafTheme
+import com.releaf.releaf.utility.NavConst.ADD_JOURNAL
+import com.releaf.releaf.utility.NavConst.ADD_JOURNAL_CHECKBOX
 import com.releaf.releaf.utility.NavConst.CHECKIN
 
 @Composable
@@ -114,7 +116,9 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             HomeFeature(
-                onClick = {},
+                onClick = {
+                    navController.navigate(ADD_JOURNAL_CHECKBOX)
+                },
                 title = "Write Journal",
                 subtitle = "Login how your day was"
             )

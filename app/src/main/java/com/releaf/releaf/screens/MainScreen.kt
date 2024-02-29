@@ -14,6 +14,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -24,13 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.releaf.releaf.BottomSheetContent
-import com.releaf.releaf.R
 import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.MainNavGraph
 
@@ -39,11 +39,17 @@ fun MainScreen( navController: NavHostController = rememberNavController() ) {
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
+    var isFABVisible by rememberSaveable {
+        mutableStateOf(true)
+    }
     Scaffold(
         bottomBar = { MyBottomBar(navController = navController) },
-        floatingActionButton ={
-            FloatingActionButton(onClick = { isSheetOpen = true }) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+
+            floatingActionButton = {
+                if(isFABVisible) {
+                FloatingActionButton(onClick = { isSheetOpen = true }) {
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+                }
             }
         }
     ) {
@@ -51,6 +57,16 @@ fun MainScreen( navController: NavHostController = rememberNavController() ) {
         MainNavGraph(navController = navController)
         BottomSheetContent(isSheetOpen = isSheetOpen, navController) {
             isSheetOpen = false
+        }
+    }
+    DisposableEffect(navController) {
+        val callback = NavController.OnDestinationChangedListener { _, destination, _ ->
+            // Show FAB only on the home screen
+            isFABVisible = destination.route == BottomBarScreenObj.Home.route
+        }
+        navController.addOnDestinationChangedListener(callback)
+        onDispose {
+            navController.removeOnDestinationChangedListener(callback)
         }
     }
 }
@@ -73,22 +89,22 @@ fun MyBottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
 
     val bottomBarDestination = screensList.any { it.route == currentDestination?.route }
-    if (bottomBarDestination) {
 
+    if (bottomBarDestination) {
         NavigationBar(
         modifier = Modifier
             .padding(8.dp)
-            .clip(RoundedCornerShape(20.dp)),
+            .clip(RoundedCornerShape(12.dp)),
 //        containerColor = MaterialTheme.colorScheme.surface
     ) {
             screensList.forEachIndexed { index, screensListItem ->
                 NavigationBarItem(
                     modifier = Modifier
-                        .size(90.dp)
+//                        .size(90.dp)
                         .padding(top = 0.dp),
 //                    selected = selectedIndex == index,
-                    onClick = {
 
+                    onClick = {
                         navController.navigate(screensListItem.route) {
                             popUpTo(navController.graph.findStartDestination().id)
                             launchSingleTop = true
