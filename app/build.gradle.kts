@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")   // annotation processor
 }
 
 android {
@@ -85,6 +86,17 @@ dependencies {
     // Declare the dependency for the Firebase Authentication library
 //    implementation("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.firebase:firebase-auth:22.3.1")
+
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    // To use Kotlin annotation processing tool (kapt
+    kapt("androidx.room:room-compiler:$room_version")
+    // coroutine support for room
+    implementation ("androidx.room:room-ktx:$room_version")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
 
 

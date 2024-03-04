@@ -28,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="android.app.lib name"
+            android:value="my_room_database" />
+
     </application>
 
 </manifest>

@@ -17,4 +17,6 @@ object NavConst {
     const val ADD_JOURNAL = "addJournal"
     const val ADD_JOURNAL_CHECKBOX = "addJournalCheckbox"
     const val SUPPORT = "support"
+
+    const val USER_TABLE = "User_Table"
 }

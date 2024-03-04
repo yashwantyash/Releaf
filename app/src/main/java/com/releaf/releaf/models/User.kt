@@ -1,4 +1,4 @@
-package com.releaf.releaf.utility
+package com.releaf.releaf.models
 
 data class User(
     val fullName:String,

@@ -46,7 +46,7 @@ import com.releaf.releaf.components.MyInputField
 import com.releaf.releaf.components.MyNormalText
 import com.releaf.releaf.components.SignupBtn
 import com.releaf.releaf.components.UnderlinedText
-import com.releaf.releaf.utility.User
+import com.releaf.releaf.models.User
 
 @Composable
 fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
