@@ -1,5 +1,7 @@
 package com.releaf.releaf.screens.AuthScreen
 
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,18 +30,28 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.releaf.releaf.R
-import com.releaf.releaf.ui.theme.ReLeafTheme
 import com.releaf.releaf.components.LogoAndName
 import com.releaf.releaf.components.MyInputField
 import com.releaf.releaf.components.MyNormalText
-import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
-import com.releaf.releaf.utility.NavConst.SIGNUP
 import com.releaf.releaf.components.SigninBtn
 import com.releaf.releaf.components.UnderlinedText
+import com.releaf.releaf.database.ReleafDatabase
+import com.releaf.releaf.models.User
+import com.releaf.releaf.ui.theme.ReLeafTheme
+import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
+import com.releaf.releaf.utility.NavConst.SIGNUP
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
+    database: ReleafDatabase,
     navController: NavController,
     name: String = stringResource(id = R.string.app_name),
     modifier: Modifier = Modifier
@@ -59,7 +71,7 @@ fun LoginScreen(
         LogoAndName(name)
         Spacer(modifier = Modifier.height(32.dp))
 
-        //email field
+        // Email field
         MyInputField(
             label = R.string.email,
             leadIcon = Icons.Default.Email,
@@ -70,6 +82,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Password field
         MyInputField(
             label = R.string.password,
             leadIcon = Icons.Default.Lock,
@@ -95,9 +108,50 @@ fun LoginScreen(
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                Toast.makeText(context, "User Authenticated", Toast.LENGTH_SHORT)
-                                    .show()
-                                navController.navigate(MAIN_ROUTE)
+
+                                val userReference = FirebaseDatabase.getInstance().reference
+                                val query =
+                                    userReference.child("user").orderByChild("email").equalTo(email)
+                                query.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        for (userSnapshot in dataSnapshot.children) {
+                                            val fullName = userSnapshot.child("fullName")
+                                                .getValue(String::class.java)
+                                            val phone = userSnapshot.child("phone")
+                                                .getValue(String::class.java)
+                                            val user = if (fullName != null && phone != null) User(
+                                                0,
+                                                fullName,
+                                                phone,
+                                                email
+                                            ) else User(0, "", "", "")
+
+                                            insertUserIntoDatabase(user, database, context)
+
+                                            Toast.makeText(
+                                                context,
+                                                "User Authenticated",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                            navController.navigate(MAIN_ROUTE)
+                                        }
+                                    }
+
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                        // Handle errors
+                                        Log.e(
+                                            "FirebaseError",
+                                            "Error retrieving data: ${databaseError.message}"
+                                        )
+                                        Toast.makeText(
+                                            context,
+                                            "Error retrieving user data",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
+                                })
                             } else {
 //                                Toast.makeText(context, "User Not Found", Toast.LENGTH_SHORT).show()
                                 task.exception?.let { exception ->
@@ -130,11 +184,20 @@ fun LoginScreen(
 
 }
 
+// Function to insert user data into the database
+private fun insertUserIntoDatabase(user: User, database: ReleafDatabase, context: Context) {
+
+    GlobalScope.launch(Dispatchers.IO) {
+        database.userDao().insertUser(user)
+    }
+}
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginPreview() {
     val navController = rememberNavController()
     ReLeafTheme {
-        LoginScreen(navController)
+//        LoginScreen(navController = navController, database = ReleafDatabase, name = "Releaf")
     }
 }

@@ -41,12 +41,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
 import com.releaf.releaf.R
-import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.components.MyInputField
 import com.releaf.releaf.components.MyNormalText
 import com.releaf.releaf.components.SignupBtn
 import com.releaf.releaf.components.UnderlinedText
 import com.releaf.releaf.models.User
+import com.releaf.releaf.theme.ReLeafTheme
 
 @Composable
 fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -158,25 +158,37 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
                                     val user = auth.currentUser
                                     val userId = user?.uid ?: ""
                                     val userRef = database.reference.child("user").child(userId)
-                                    userRef.setValue(User(fullName, phone, email))
+                                    userRef.setValue(User(fullName = fullName, phone = phone, email = email))
                                         .addOnSuccessListener {
-                                            Toast.makeText(context,"Registration Successful", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                context,
+                                                "Registration Successful",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                             navController.navigate("home")
-                                        }.addOnFailureListener {exception ->
-                                            val errorMessage = exception.localizedMessage ?: "An error occurred"
-                                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                        }.addOnFailureListener { exception ->
+                                            val errorMessage =
+                                                exception.localizedMessage ?: "An error occurred"
+                                            Toast.makeText(
+                                                context,
+                                                errorMessage,
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                 } else {
                                     task.exception?.let { exception ->
                                         // Handle other registration errors
-                                        val errorMessage = exception.localizedMessage ?: "An error occurred"
-                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                        val errorMessage =
+                                            exception.localizedMessage ?: "An error occurred"
+                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)
+                                            .show()
                                     }
                                     isCreatingAccount = false
                                 }
                             }
                     } else {
-                        Toast.makeText(context, "No field should be Empty!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "No field should be Empty!", Toast.LENGTH_SHORT)
+                            .show()
 
                     }
                 }
