@@ -15,22 +15,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    lateinit var database: ReleafDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        database = ReleafDatabase.getDatabase(this)
-
-        GlobalScope.launch {
-            database.userDao().insertUser(
-                User(
-                    fullName = "John Doe",
-                    phone = "1234567890",
-                    email = "email"
-                )
-            )
-        }
         setContent {
             ReLeafTheme {
                 // A surface container using the 'background' color from the theme
@@ -38,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SetupNavigation(database)
+                    SetupNavigation()
                 }
             }
         }

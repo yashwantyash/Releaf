@@ -12,17 +12,17 @@ import com.releaf.releaf.utility.NavConst.LOGIN
 import com.releaf.releaf.utility.NavConst.SIGNUP
 
 fun NavGraphBuilder.authNavGraph(
-    navController: NavHostController, database: ReleafDatabase
+    navController: NavHostController
 ) {
     navigation(
         startDestination = LOGIN,
         route = AUTH_ROUTE
     ) {
         composable(route = LOGIN) {
-            LoginScreen(navController=navController, database = database)
+            LoginScreen(navController=navController)
         }
         composable(route = SIGNUP) {
-            SignupScreen(navController)
+            SignupScreen(navController=navController)
         }
     }
 }

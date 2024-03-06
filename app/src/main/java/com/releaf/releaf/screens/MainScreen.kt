@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -35,7 +36,7 @@ import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.MainNavGraph
 
 @Composable
-fun MainScreen( navController: NavHostController = rememberNavController() ) {
+fun MainScreen(navControllerAuth : NavHostController, navController: NavHostController = rememberNavController() ) {
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
@@ -54,7 +55,7 @@ fun MainScreen( navController: NavHostController = rememberNavController() ) {
         }
     ) {
         it
-        MainNavGraph(navController = navController)
+        MainNavGraph(navControllerAuth = navControllerAuth, navController = navController)
         BottomSheetContent(isSheetOpen = isSheetOpen, navController) {
             isSheetOpen = false
         }

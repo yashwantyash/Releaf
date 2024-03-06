@@ -18,8 +18,8 @@ interface UserDao {
     @Delete
     suspend fun deleteUser(user: User)
 
-//    @Query("SELECT COUNT(*) FROM USER_TABLE")
-//    suspend fun getUserCount(): Int
+    @Query("SELECT COUNT(*) FROM USER_TABLE")
+    suspend fun getUserCount(): Int
 
 //    @Query("SELECT * FROM USER_TABLE")
 //    fun getUser(): LiveData<List<UserRoom>>

@@ -1,6 +1,7 @@
 package com.releaf.releaf.screens.AuthScreen
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +53,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
-    database: ReleafDatabase,
     navController: NavController,
     name: String = stringResource(id = R.string.app_name),
     modifier: Modifier = Modifier
@@ -61,134 +62,163 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var isCheckingUserExistence by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(36.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        LogoAndName(name)
-        Spacer(modifier = Modifier.height(32.dp))
+    val database: ReleafDatabase = ReleafDatabase.getDatabase(context)
 
-        // Email field
-        MyInputField(
-            label = R.string.email,
-            leadIcon = Icons.Default.Email,
-            keyboardType = KeyboardType.Email
-        ) {
-            email = it
+    val auth = FirebaseAuth.getInstance()
+//     Check if user is signed in (non-null) and update UI accordingly.
+    val currentUser = auth.currentUser
+    if (currentUser != null) {
+        LaunchedEffect(Unit) {
+            navController.popBackStack()
+            navController.navigate(MAIN_ROUTE)
         }
+    }
+    else {
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Password field
-        MyInputField(
-            label = R.string.password,
-            leadIcon = Icons.Default.Lock,
-            keyboardType = KeyboardType.Password
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(36.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            password = it
-        }
+            LogoAndName(name)
+            Spacer(modifier = Modifier.height(32.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            // Email field
+            MyInputField(
+                label = R.string.email,
+                leadIcon = Icons.Default.Email,
+                keyboardType = KeyboardType.Email
+            ) {
+                email = it
+            }
 
-        if (isCheckingUserExistence) {
-            LinearProgressIndicator()
-        } else {
-            SigninBtn(
-                R.string.login_button,
-                navController,
-                ""
-            )
-            {
-                if (email.isNotEmpty() && password.isNotEmpty()) {
-                    isCheckingUserExistence = true
+            Spacer(modifier = Modifier.height(16.dp))
 
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
+            // Password field
+            MyInputField(
+                label = R.string.password,
+                leadIcon = Icons.Default.Lock,
+                keyboardType = KeyboardType.Password
+            ) {
+                password = it
+            }
 
-                                val userReference = FirebaseDatabase.getInstance().reference
-                                val query =
-                                    userReference.child("user").orderByChild("email").equalTo(email)
-                                query.addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        for (userSnapshot in dataSnapshot.children) {
-                                            val fullName = userSnapshot.child("fullName")
-                                                .getValue(String::class.java)
-                                            val phone = userSnapshot.child("phone")
-                                                .getValue(String::class.java)
-                                            val user = if (fullName != null && phone != null) User(
-                                                0,
-                                                fullName,
-                                                phone,
-                                                email
-                                            ) else User(0, "", "", "")
+            Spacer(modifier = Modifier.height(24.dp))
 
-                                            insertUserIntoDatabase(user, database, context)
+            if (isCheckingUserExistence) {
+                LinearProgressIndicator()
+            } else {
+                SigninBtn(
+                    R.string.login_button,
+                    navController,
+                    ""
+                )
+                {
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
+                        isCheckingUserExistence = true
 
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+
+                                    retrieveFirebaseUserDetail(
+                                        email = email,
+                                        context = context,
+                                        onSuccess = { user ->
+                                            insertUserInRoom(
+                                                user = user,
+                                                context = context,
+                                                roomDatabase = database
+                                            )
                                             Toast.makeText(
                                                 context,
                                                 "User Authenticated",
                                                 Toast.LENGTH_SHORT
-                                            )
-                                                .show()
+                                            ).show()
+                                            navController.popBackStack()
                                             navController.navigate(MAIN_ROUTE)
+                                        },
+                                        onFailure = {
+                                            Toast.makeText(
+                                                context,
+                                                "Error retrieving user data",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
-                                    }
+                                    )
+                                } else {
 
-                                    override fun onCancelled(databaseError: DatabaseError) {
-                                        // Handle errors
-                                        Log.e(
-                                            "FirebaseError",
-                                            "Error retrieving data: ${databaseError.message}"
-                                        )
-                                        Toast.makeText(
-                                            context,
-                                            "Error retrieving user data",
-                                            Toast.LENGTH_SHORT
-                                        )
+//                                Toast.makeText(context, "User Not Found", Toast.LENGTH_SHORT).show()
+                                    task.exception?.let { exception ->
+                                        // Handle other registration errors
+                                        val errorMessage =
+                                            exception.localizedMessage ?: "An error occurred"
+                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)
                                             .show()
                                     }
-                                })
-                            } else {
-//                                Toast.makeText(context, "User Not Found", Toast.LENGTH_SHORT).show()
-                                task.exception?.let { exception ->
-                                    // Handle other registration errors
-                                    val errorMessage =
-                                        exception.localizedMessage ?: "An error occurred"
-                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                    isCheckingUserExistence = false
                                 }
-                                isCheckingUserExistence = false
                             }
-                        }
-                } else {
-                    Toast.makeText(context, "Empty Email or Password", Toast.LENGTH_SHORT)
-                        .show()
+
+                    } else {
+                        Toast.makeText(context, "Empty Email or Password", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
+            Spacer(modifier = Modifier.height(24.dp))
+            Row {
+                MyNormalText(valueId = R.string.ask_signup)
+                Spacer(modifier = Modifier.width(8.dp))
+                UnderlinedText(
+                    value = "Register Now!",
+                    navController = navController,
+                    desScreen = SIGNUP
+                )
+            }
+            Spacer(modifier = Modifier.height(100.dp))
         }
-        Spacer(modifier = Modifier.height(24.dp))
-        Row {
-            MyNormalText(valueId = R.string.ask_signup)
-            Spacer(modifier = Modifier.width(8.dp))
-            UnderlinedText(
-                value = "Register Now!",
-                navController = navController,
-                desScreen = SIGNUP
-            )
-        }
-        Spacer(modifier = Modifier.height(100.dp))
     }
+}
 
+private fun retrieveFirebaseUserDetail(
+    email: String,
+    context: Context,
+    onSuccess: (User) -> Unit,
+    onFailure: () -> Unit
+) {
+    val userReference = FirebaseDatabase.getInstance().reference
+    val query = userReference.child("user").orderByChild("email").equalTo(email)
+    query.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (userSnapshot in dataSnapshot.children) {
+                val fullName = userSnapshot.child("fullName").getValue(String::class.java)
+                val phone = userSnapshot.child("phone").getValue(String::class.java)
+                val user = if (fullName != null && phone != null) User(
+                    0,
+                    fullName,
+                    phone,
+                    email
+                ) else User(0, "", "", "")
+                onSuccess(user)
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Handle errors
+            Log.e("FirebaseError", "Error retrieving data: ${databaseError.message}")
+            onFailure()
+        }
+    })
 }
 
 // Function to insert user data into the database
-private fun insertUserIntoDatabase(user: User, database: ReleafDatabase, context: Context) {
-
+private fun insertUserInRoom(user: User, context: Context, roomDatabase: ReleafDatabase) {
+//    val database: ReleafDatabase = ReleafDatabase.getDatabase(context)
     GlobalScope.launch(Dispatchers.IO) {
-        database.userDao().insertUser(user)
+        roomDatabase.userDao().insertUser(user)
     }
 }
 
