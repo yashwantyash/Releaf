@@ -2,7 +2,7 @@ package com.releaf.releaf.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.releaf.releaf.utility.NavConst.USER_TABLE
+import com.releaf.releaf.utility.Constants.USER_TABLE
 
 @Entity(tableName = USER_TABLE)
 data class User(

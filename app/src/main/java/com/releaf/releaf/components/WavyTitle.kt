@@ -33,11 +33,9 @@ fun WavyTitle(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
+                    .height(10.dp)
                     .background(MaterialTheme.colorScheme.primaryContainer)
-            ) {
-
-            }
+            )
             Image(
                 painter = painterResource(id = R.drawable.releaf_wave),
                 contentDescription = null,
@@ -50,9 +48,8 @@ fun WavyTitle(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp),
+                .padding(start = 16.dp),
             text = title,
-            fontSize = 40.sp,
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )

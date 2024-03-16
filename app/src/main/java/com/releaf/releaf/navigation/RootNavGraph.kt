@@ -5,9 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.screens.MainScreen
-import com.releaf.releaf.utility.NavConst.AUTH_ROUTE
-import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
-import com.releaf.releaf.utility.NavConst.ROOT_ROUTE
+import com.releaf.releaf.utility.Constants.AUTH_ROUTE
+import com.releaf.releaf.utility.Constants.MAIN_ROUTE
+import com.releaf.releaf.utility.Constants.ROOT_ROUTE
 
 @Composable
 fun SetupNavigation() {

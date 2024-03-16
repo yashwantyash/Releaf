@@ -1,20 +1,11 @@
 package com.reyaz.bottomnavigation
 
-import android.media.Image
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import com.releaf.releaf.R
-import com.releaf.releaf.utility.NavConst.COMMUNITY
-import com.releaf.releaf.utility.NavConst.HOME
-import com.releaf.releaf.utility.NavConst.JOURNAL
-import com.releaf.releaf.utility.NavConst.PROFILE
-import com.releaf.releaf.utility.NavConst.PROGRESS
+import com.releaf.releaf.utility.Constants.COMMUNITY
+import com.releaf.releaf.utility.Constants.HOME
+import com.releaf.releaf.utility.Constants.JOURNAL
+import com.releaf.releaf.utility.Constants.PROFILE
+import com.releaf.releaf.utility.Constants.PROGRESS
 
 sealed class BottomBarScreenObj(
     val route: String,

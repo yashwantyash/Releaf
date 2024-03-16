@@ -1,7 +1,6 @@
 package com.releaf.releaf.screens.AuthScreen
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -45,8 +44,8 @@ import com.releaf.releaf.components.UnderlinedText
 import com.releaf.releaf.database.ReleafDatabase
 import com.releaf.releaf.models.User
 import com.releaf.releaf.ui.theme.ReLeafTheme
-import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
-import com.releaf.releaf.utility.NavConst.SIGNUP
+import com.releaf.releaf.utility.Constants.MAIN_ROUTE
+import com.releaf.releaf.utility.Constants.SIGNUP
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

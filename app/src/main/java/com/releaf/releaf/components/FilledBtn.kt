@@ -15,30 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun OutFillBtn(
-    textOutl: String,
-    outOnClick: () -> Unit = {},
+fun FilledBtn(
     fillOnClick: () -> Unit = {},
     txtFill: String
 
 ) {
-    Row(
-        Modifier.padding(horizontal = 32.dp),
-        verticalAlignment = Alignment.Bottom
-    ) {
-        OutlinedButton(
-            onClick = outOnClick,
-            shape = RoundedCornerShape(10.dp)
-
-        ) {
-            Text(
-                text = textOutl,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                fontSize = 18.sp
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-
         Button(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -56,5 +37,4 @@ fun OutFillBtn(
             )
 
         }
-    }
 }

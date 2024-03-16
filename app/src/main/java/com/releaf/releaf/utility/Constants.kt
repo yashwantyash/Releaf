@@ -1,6 +1,6 @@
 package com.releaf.releaf.utility
 
-object NavConst {
+object Constants {
     const val HOME = "home"
     const val PROGRESS = "progress"
     const val JOURNAL = "journal"
@@ -19,4 +19,5 @@ object NavConst {
     const val SUPPORT = "support"
 
     const val USER_TABLE = "User_Table"
+    const val CHECKIN_TABLE = "CheckIn_Table"
 }

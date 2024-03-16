@@ -11,13 +11,13 @@ import com.releaf.releaf.screens.BottomScreen.HomeScreen
 import com.releaf.releaf.screens.BottomScreen.JournalScreen
 import com.releaf.releaf.screens.BottomScreen.ProfileScreen
 import com.releaf.releaf.screens.BottomScreen.ProgressScreen
-import com.releaf.releaf.utility.NavConst.COMMUNITY
-import com.releaf.releaf.utility.NavConst.HOME
-import com.releaf.releaf.utility.NavConst.JOURNAL
-import com.releaf.releaf.utility.NavConst.LOGIN
-import com.releaf.releaf.utility.NavConst.MAIN_ROUTE
-import com.releaf.releaf.utility.NavConst.PROFILE
-import com.releaf.releaf.utility.NavConst.PROGRESS
+import com.releaf.releaf.utility.Constants.COMMUNITY
+import com.releaf.releaf.utility.Constants.HOME
+import com.releaf.releaf.utility.Constants.JOURNAL
+import com.releaf.releaf.utility.Constants.LOGIN
+import com.releaf.releaf.utility.Constants.MAIN_ROUTE
+import com.releaf.releaf.utility.Constants.PROFILE
+import com.releaf.releaf.utility.Constants.PROGRESS
 
 @Composable
 fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostController) {
@@ -45,6 +45,5 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
             LoginScreen(navController = navController)
         }
         homeNavGraph(navController = navController)
-//        authNavGraph(navController = navController)
     }
 }

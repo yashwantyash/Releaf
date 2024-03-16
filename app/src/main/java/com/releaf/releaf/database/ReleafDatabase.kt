@@ -4,20 +4,25 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.releaf.releaf.models.CheckInModel
 import com.releaf.releaf.models.User
 
-@Database(entities = [User::class /*CheckIn::class*/], version = 1)
+@Database(entities = [User::class, CheckInModel::class], version = 2)
 abstract class ReleafDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun dailyCheckInDao(): DailyCheckInDao
 
     companion object {
         private var INSTANCE: ReleafDatabase? = null
         fun getDatabase(context: Context): ReleafDatabase {
             @Volatile
-            //Volatile ensure that as any value is assigned to this Instant variable, All threads will be informed about The updated value
+            /*Volatile ensure that as any value is assigned to this Instant variable,
+            All threads will be informed about The updated value             */
+
             if (INSTANCE == null) {
                 synchronized(this){
-                    //synchronised (locking) is used to avoid two threads creating this database object at same time, protect creation of two database instances
+                    /*synchronised (locking) is used to avoid two threads creating this database object at same time,
+                    protect creation of two database instances*/
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         ReleafDatabase::class.java,

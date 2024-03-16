@@ -47,7 +47,7 @@ import com.releaf.releaf.components.SignupBtn
 import com.releaf.releaf.components.UnderlinedText
 import com.releaf.releaf.models.User
 import com.releaf.releaf.theme.ReLeafTheme
-import com.releaf.releaf.utility.NavConst.HOME
+import com.releaf.releaf.utility.Constants.HOME
 
 @Composable
 fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -168,7 +168,8 @@ fun SignupScreen(navController: NavController, modifier: Modifier = Modifier) {
                                             ).show()
                                             navController.popBackStack()
                                             navController.navigate(HOME)
-                                        }.addOnFailureListener { exception ->
+                                        }
+                                        .addOnFailureListener { exception ->
                                             val errorMessage =
                                                 exception.localizedMessage ?: "An error occurred"
                                             Toast.makeText(

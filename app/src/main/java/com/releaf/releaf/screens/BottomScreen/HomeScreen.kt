@@ -34,14 +34,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
 import com.releaf.releaf.theme.ReLeafTheme
-import com.releaf.releaf.utility.NavConst.ADD_JOURNAL
-import com.releaf.releaf.utility.NavConst.ADD_JOURNAL_CHECKBOX
-import com.releaf.releaf.utility.NavConst.CHECKIN
+import com.releaf.releaf.utility.Constants.ADD_JOURNAL_CHECKBOX
+import com.releaf.releaf.utility.Constants.CHECKIN
 
 @Composable
 fun HomeScreen(
@@ -57,7 +55,7 @@ fun HomeScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp)
+                    .height(54.dp)
                     .background(MaterialTheme.colorScheme.primaryContainer)
                     .padding(10.dp)
 
