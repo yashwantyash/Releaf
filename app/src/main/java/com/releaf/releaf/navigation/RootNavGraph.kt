@@ -11,19 +11,18 @@ import com.releaf.releaf.utility.Constants.ROOT_ROUTE
 
 @Composable
 fun SetupNavigation() {
-    val navController = rememberNavController()
+    val rootNavController = rememberNavController()
     NavHost(
-        navController = navController,
+        navController = rootNavController,
         startDestination = AUTH_ROUTE,
 //        startDestination = MAIN_ROUTE,
         route = ROOT_ROUTE
     ) {
 
-        authNavGraph(navController)
-//        mainNavGraph(navController)
+        authNavGraph(rootNavController = rootNavController)
 
         composable(route = MAIN_ROUTE) {
-            MainScreen(navControllerAuth = navController)
+            MainScreen(rootNavController = rootNavController)
         }
     }
 }

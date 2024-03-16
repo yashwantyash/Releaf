@@ -36,7 +36,7 @@ import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.MainNavGraph
 
 @Composable
-fun MainScreen(navControllerAuth : NavHostController, navController: NavHostController = rememberNavController() ) {
+fun MainScreen(rootNavController : NavHostController, navController: NavHostController = rememberNavController() ) {
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
@@ -55,7 +55,7 @@ fun MainScreen(navControllerAuth : NavHostController, navController: NavHostCont
         }
     ) {
         it
-        MainNavGraph(navControllerAuth = navControllerAuth, navController = navController)
+        MainNavGraph(navControllerAuth = rootNavController, navController = navController)
         BottomSheetContent(isSheetOpen = isSheetOpen, navController) {
             isSheetOpen = false
         }

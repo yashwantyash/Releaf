@@ -52,7 +52,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
+    rootNavController: NavController,
     name: String = stringResource(id = R.string.app_name),
     modifier: Modifier = Modifier
 ) {
@@ -68,8 +68,8 @@ fun LoginScreen(
     val currentUser = auth.currentUser
     if (currentUser != null) {
         LaunchedEffect(Unit) {
-            navController.popBackStack()
-            navController.navigate(MAIN_ROUTE)
+            rootNavController.popBackStack()
+            rootNavController.navigate(MAIN_ROUTE)
         }
     }
     else {
@@ -111,7 +111,7 @@ fun LoginScreen(
             } else {
                 SigninBtn(
                     R.string.login_button,
-                    navController,
+                    rootNavController,
                     ""
                 )
                 {
@@ -136,8 +136,8 @@ fun LoginScreen(
                                                 "User Authenticated",
                                                 Toast.LENGTH_SHORT
                                             ).show()
-                                            navController.popBackStack()
-                                            navController.navigate(MAIN_ROUTE)
+                                            rootNavController.popBackStack()
+                                            rootNavController.navigate(MAIN_ROUTE)
                                         },
                                         onFailure = {
                                             Toast.makeText(
@@ -173,7 +173,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 UnderlinedText(
                     value = "Register Now!",
-                    navController = navController,
+                    navController = rootNavController,
                     desScreen = SIGNUP
                 )
             }

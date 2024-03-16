@@ -373,7 +373,7 @@ fun DailyCheckIn(
             outOnClick = {
 //                TODO("need to click on back button twice")
                 navController.popBackStack()
-                navController.navigate(HOME)
+//                navController.navigate(HOME)
             },
             fillOnClick = {
                 if (selectedEmojiIndex == -1) {
@@ -396,7 +396,7 @@ fun DailyCheckIn(
 
 //                    TODO("need to click on back button twice")
                     navController.popBackStack()
-                    navController.navigate(HOME)
+//                    navController.navigate(HOME)
                 }
             },
             txtFill = "Save"

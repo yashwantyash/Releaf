@@ -42,7 +42,7 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
             ProfileScreen(navController = navController, navControllerAuth = navController)
         }
         composable(route = LOGIN) {
-            LoginScreen(navController = navController)
+            LoginScreen(rootNavController = navController)
         }
         homeNavGraph(navController = navController)
     }
