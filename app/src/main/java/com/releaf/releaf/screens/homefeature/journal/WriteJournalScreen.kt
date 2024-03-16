@@ -1,4 +1,4 @@
-package com.releaf.releaf.screens.homefeature
+package com.releaf.releaf.screens.homefeature.journal
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -26,14 +27,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.components.WavyTitle
 import com.releaf.releaf.database.ReleafDatabase
 import com.releaf.releaf.models.CheckBoxViewModel
 import com.releaf.releaf.models.JournalModel
+import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants.HOME
-import com.releaf.releaf.utility.Constants.MAIN_ROUTE
+import com.releaf.releaf.utility.Constants.JOURNAL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -60,6 +65,12 @@ fun WriteJournal(
     val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
     val formattedDate = checkInDate.format(dateFormatter)
 
+    var moodError by remember { mutableStateOf(false) }
+    var titleError by remember { mutableStateOf(false) }
+    var descriptionError by remember { mutableStateOf(false) }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,10 +85,10 @@ fun WriteJournal(
             modifier = Modifier
                 .align(Alignment.Start)
                 .padding(horizontal = 16.dp),
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize
+            fontSize = MaterialTheme.typography.headlineLarge.fontSize
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -88,8 +99,11 @@ fun WriteJournal(
         ) {
 
             OutlinedTextField(
+                isError = moodError,
                 value = selectedOptionText,
-                onValueChange = {},
+                onValueChange = {
+                    moodError = false
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(),
@@ -97,8 +111,8 @@ fun WriteJournal(
                 label = { Text(text = "Mood") },
                 colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
-
             )
+
 
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -111,6 +125,7 @@ fun WriteJournal(
                         onClick = {
                             selectedOptionText = it
                             expanded = false
+                            moodError = false
                         },
 //                        modifier = Modifier
 //                            .fillMaxWidth(),
@@ -120,56 +135,114 @@ fun WriteJournal(
 
             }
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
+        if (moodError) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 1.dp,start = 20.dp)
+                    .align(Alignment.Start),
+                text = "Please select your mood",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
+            isError = titleError,
             value = journalTitle,
-            onValueChange = { journalTitle = it },
+            onValueChange = {
+                journalTitle = it
+                titleError = false
+            },
             label = { Text("Title your day") },
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-
         )
+        if (moodError) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 1.dp,start = 20.dp)
+                    .align(Alignment.Start),
+                text = "Plese enter title of your day",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
         Spacer(modifier = Modifier.height(12.dp))
         OutlinedTextField(
+            isError = descriptionError,
             value = journalDescription,
-            onValueChange = { journalDescription = it },
+            onValueChange = {
+                journalDescription = it
+                descriptionError = false
+            },
             label = { Text("Describe how your day was") },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .height(150.dp)
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        if (moodError) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 1.dp,start = 20.dp)
+                    .align(Alignment.Start),
+                text = "Please describe your day",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        Spacer(modifier = Modifier.height(54.dp))
         Button(
             onClick = {
+                moodError = selectedOptionText=="How was your day?"
+                titleError = journalTitle.isEmpty()
+                descriptionError = journalDescription.isEmpty()
 
-                val newJournal = JournalModel(
-                    date = formattedDate,
-                    triggers = checkBoxViewModel.triggers,
-                    mood = checkBoxViewModel.mood,
-                    progress = checkBoxViewModel.progress,
-                    aboutDay = selectedOptionText,
-                    title = journalTitle,
-                    description = journalDescription
-                )
-                GlobalScope.launch(Dispatchers.IO) {
+                if (!moodError && !titleError && !descriptionError) {
 
-                    val dao = ReleafDatabase.getDatabase(context).journalDao()
-                    dao.insertJournal(newJournal)
+                    val newJournal = JournalModel(
+                        date = formattedDate,
+                        triggers = checkBoxViewModel.triggers,
+                        mood = checkBoxViewModel.mood,
+                        progress = checkBoxViewModel.progress,
+                        aboutDay = selectedOptionText,
+                        title = journalTitle,
+                        description = journalDescription
+                    )
+
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val dao = ReleafDatabase.getDatabase(context).journalDao()
+                        dao.insertJournal(newJournal)
+                    }
+                    navController.popBackStack(route = HOME, inclusive = true)
+                    navController.navigate(JOURNAL)
                 }
-//                    navController.navigate("HomeScreen")
-                navController.popBackStack(route = HOME, inclusive = false)
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text("Save")
         }
     }
 
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun WriteJournalPreview() {
+    ReLeafTheme {
+        val navController = rememberNavController()
+        val checkBoxViewModel = remember { CheckBoxViewModel() }
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            WriteJournal(navController = navController, checkBoxViewModel = checkBoxViewModel)
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.releaf.releaf.screens.homefeature
+package com.releaf.releaf.screens.homefeature.journal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

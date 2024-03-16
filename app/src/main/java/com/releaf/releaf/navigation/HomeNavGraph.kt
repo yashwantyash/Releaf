@@ -1,15 +1,13 @@
 package com.releaf.releaf.navigation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.releaf.releaf.models.CheckBoxViewModel
-import com.releaf.releaf.screens.homefeature.JournalCheckbox
+import com.releaf.releaf.screens.homefeature.journal.JournalCheckbox
 import com.releaf.releaf.screens.homefeature.DailyCheckIn
-import com.releaf.releaf.screens.homefeature.WriteJournal
+import com.releaf.releaf.screens.homefeature.journal.WriteJournal
 import com.releaf.releaf.utility.Constants.ADD_JOURNAL_CHECKBOX
 import com.releaf.releaf.utility.Constants.CHECKIN
 import com.releaf.releaf.utility.Constants.HOME_FEAT_ROUTE
