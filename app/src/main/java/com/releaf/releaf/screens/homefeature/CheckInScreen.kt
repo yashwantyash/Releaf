@@ -1,6 +1,7 @@
 package com.releaf.releaf.screens.homefeature
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -72,7 +73,8 @@ fun DailyCheckIn(
 ) {
 
     val scrollState = rememberScrollState()
-    var selectedEmojiIndex by remember { mutableStateOf(-2) }
+    var selectedEmojiIndex by remember { mutableStateOf(-1) }
+    var  emojiError by remember { mutableStateOf(false)}
     var selectedEmotion by remember { mutableStateOf("") }
     var temporaryMessage by remember { mutableStateOf("") }
     var showTemporaryMassage by remember { mutableStateOf(false) }
@@ -151,6 +153,7 @@ fun DailyCheckIn(
                     imageId = R.drawable.happy,
                     isSelected = selectedEmojiIndex == 0,
                 ) {
+                    emojiError = false
                     selectedEmojiIndex = 0
                     selectedEmotion = "Happy"
                     temporaryMessage = "Glad you are happy!"
@@ -163,6 +166,7 @@ fun DailyCheckIn(
                     subtitle = "Hopeful", imageId = R.drawable.hopeful,
                     isSelected = selectedEmojiIndex == 1,
                 ) {
+                    emojiError = false
                     selectedEmojiIndex = 1
                     selectedEmotion = "Hopeful"
                     temporaryMessage = "Never lose hope! Keep going"
@@ -175,6 +179,7 @@ fun DailyCheckIn(
                     subtitle = "Neutral", imageId = R.drawable.neutral,
                     isSelected = selectedEmojiIndex == 2,
                 ) {
+                    emojiError = false
                     selectedEmojiIndex = 2
                     selectedEmotion = "Neutral"
                     temporaryMessage = "Hang in there. You are doing great!"
@@ -187,6 +192,7 @@ fun DailyCheckIn(
                     subtitle = "Unsure", imageId = R.drawable.unsure,
                     isSelected = selectedEmojiIndex == 3,
                 ) {
+                    emojiError = false
                     selectedEmojiIndex = 3
                     selectedEmotion = "Unsure"
                     temporaryMessage = "It's okay to be unsure. Click on Support to feel better"
@@ -198,6 +204,7 @@ fun DailyCheckIn(
                     imageId = R.drawable.sad,
                     isSelected = selectedEmojiIndex == 4,
                 ) {
+                   emojiError = false
                     selectedEmojiIndex = 4
                     selectedEmotion = "Sad"
                     temporaryMessage = "It's ok to be not ok. Help is available"
@@ -209,6 +216,7 @@ fun DailyCheckIn(
                     imageId = R.drawable.heart,
                     isSelected = selectedEmojiIndex == 5,
                 ) {
+                    emojiError = false
                     selectedEmojiIndex = 5
                     selectedEmotion = "Worst"
                     showHotlineDialog = true
@@ -248,7 +256,7 @@ fun DailyCheckIn(
 
             }
         }
-        if (selectedEmojiIndex==-1) {
+        if (emojiError) {
             Text(
                 modifier = Modifier
                     .padding(top = 8.dp, start = 24.dp)
@@ -363,17 +371,16 @@ fun DailyCheckIn(
         OutFillBtn(
             textOutl = "Back",
             outOnClick = {
+//                TODO("need to click on back button twice")
                 navController.popBackStack()
                 navController.navigate(HOME)
             },
             fillOnClick = {
-                if (selectedEmojiIndex==-2){
-                    selectedEmojiIndex=-1
-                }
-                else if (intention.isEmpty()) {
+                if (selectedEmojiIndex == -1) {
+                    emojiError = true
+                } else if (intention.isEmpty()) {
                     showError = true
-                }
-                else {
+                } else {
                     saveCheckIn(
                         context,
                         timeOfDay,
@@ -383,6 +390,12 @@ fun DailyCheckIn(
                         intention,
                         if (currentTimeHour >= 18) sliderValue.toInt() else null
                     )
+
+                        Toast.makeText(context, "Check-in saved", Toast.LENGTH_SHORT)
+                            .show()
+
+//                    TODO("need to click on back button twice")
+                    navController.popBackStack()
                     navController.navigate(HOME)
                 }
             },
@@ -427,6 +440,7 @@ fun Emoji(
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {
+
 //    var isSelected by remember { mutableStateOf(false) }
     val tintColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Black
 
@@ -460,6 +474,8 @@ fun saveCheckIn(
     eveningSliderValue: Int?
 ) {
 
+    var insertionSuccessfull = false
+
     GlobalScope.launch(Dispatchers.IO) {
         val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
         val formattedDate = checkInDate.format(dateFormatter)
@@ -472,7 +488,8 @@ fun saveCheckIn(
             intention = intention,
             eveningSliderValue = eveningSliderValue
         )
-        ReleafDatabase.getDatabase(context).dailyCheckInDao().insertCheckIn(newCheckIn)
+        val dao = ReleafDatabase.getDatabase(context).dailyCheckInDao()
+        dao.insertCheckIn(newCheckIn)
     }
 }
 
