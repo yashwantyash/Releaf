@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.releaf.releaf.models.CheckInModel
+import com.releaf.releaf.models.JournalModel
 import com.releaf.releaf.models.User
 
-@Database(entities = [User::class, CheckInModel::class], version = 2)
+@Database(entities = [User::class, CheckInModel::class, JournalModel::class], version = 3)
 abstract class ReleafDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun dailyCheckInDao(): DailyCheckInDao
+    abstract fun journalDao(): JournalDao
 
     companion object {
         private var INSTANCE: ReleafDatabase? = null

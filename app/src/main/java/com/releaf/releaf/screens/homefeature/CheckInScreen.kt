@@ -68,7 +68,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 
 fun DailyCheckIn(
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController /*= rememberNavController()*/,
     context: Context = LocalContext.current
 ) {
 

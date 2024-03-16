@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.releaf.releaf.screens.homefeature.AddJournalCheckbox
+import com.releaf.releaf.screens.homefeature.JournalCheckbox
 import com.releaf.releaf.screens.homefeature.DailyCheckIn
 import com.releaf.releaf.utility.Constants.ADD_JOURNAL_CHECKBOX
 import com.releaf.releaf.utility.Constants.CHECKIN
@@ -20,7 +20,7 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController){
             DailyCheckIn(navController)
         }
         composable(route = ADD_JOURNAL_CHECKBOX) {
-            AddJournalCheckbox()
+            JournalCheckbox( navController = navController)
         }
         composable(route =  SUPPORT) {
 

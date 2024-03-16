@@ -16,7 +16,7 @@ interface DailyCheckInDao {
     suspend fun getCheckInCount(): Int
 
     @Query("SELECT * FROM CHECKIN_TABLE order by checkInDate ASC")
-    fun  getCheckInDate(): Flow<List<CheckInModel>>
+    fun  getCheckInByDateAdded(): Flow<List<CheckInModel>>
 
 }
 

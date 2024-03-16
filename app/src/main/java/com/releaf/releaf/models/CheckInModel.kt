@@ -8,10 +8,10 @@ import com.releaf.releaf.utility.Constants.CHECKIN_TABLE
 data class CheckInModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val timeOfDay: String = "nu",
-    val checkInDate: String= "nu",
+    val timeOfDay: String = "",
+    val checkInDate: String= "",
     val checkInCount: Int,
-    val selectedEmotion: String= "nu",
-    val intention: String= "nu",
+    val selectedEmotion: String= "",
+    val intention: String= "",
     val eveningSliderValue: Int? = null, // Null for morning
 )
