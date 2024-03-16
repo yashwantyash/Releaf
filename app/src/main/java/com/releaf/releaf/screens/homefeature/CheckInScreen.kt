@@ -74,7 +74,7 @@ fun DailyCheckIn(
 
     val scrollState = rememberScrollState()
     var selectedEmojiIndex by remember { mutableStateOf(-1) }
-    var  emojiError by remember { mutableStateOf(false)}
+    var emojiError by remember { mutableStateOf(false)}
     var selectedEmotion by remember { mutableStateOf("") }
     var temporaryMessage by remember { mutableStateOf("") }
     var showTemporaryMassage by remember { mutableStateOf(false) }

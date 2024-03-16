@@ -1,6 +1,5 @@
 package com.releaf.releaf.screens.homefeature
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -19,12 +18,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.components.CheckBox
 import com.releaf.releaf.components.OutFillBtn
 import com.releaf.releaf.components.WavyTitle
@@ -43,6 +44,10 @@ fun JournalCheckbox(
     var selectedMood by remember { mutableStateOf<String?>(null) }
     var selectedProgress by remember { mutableStateOf<String?>(null) }
 
+    var triggersError by remember { mutableStateOf(false) }
+    var moodError by remember { mutableStateOf(false) }
+    var progressError by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,16 +64,43 @@ fun JournalCheckbox(
                 "Extreme Controllable"
             ),
             selectedOption = selectedTriggers,
-            onOptionSelected = { selectedTriggers = it }
+            onOptionSelected = {
+                selectedTriggers = it
+                triggersError = false
+            }
         )
+
+        if (triggersError) {
+            Text(
+                modifier = Modifier
+                    .padding(bottom = 4.dp, start = 24.dp)
+                    .align(Alignment.Start),
+                text = "Please select a trigger",
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         BoxCheckbox(
             title = "Mood",
             optionsList = listOf<String>("Happy", "Neutral", "Aggressive", "Mood Swings"),
             selectedOption = selectedMood,
-            onOptionSelected = { selectedMood = it }
-
+            onOptionSelected = {
+                selectedMood = it
+                moodError = false
+            }
         )
+
+        if (moodError) {
+            Text(
+                modifier = Modifier
+                    .padding(bottom = 4.dp, start = 24.dp)
+                    .align(Alignment.Start),
+                text = "Please select a mood",
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         BoxCheckbox(
             title = "Progress",
@@ -79,8 +111,22 @@ fun JournalCheckbox(
                 "I think I'm going back to square one "
             ),
             selectedOption = selectedProgress,
-            onOptionSelected = { selectedProgress = it }
+            onOptionSelected = {
+                selectedProgress = it
+                progressError = false
+            }
         )
+
+        if (progressError) {
+            Text(
+                modifier = Modifier
+                    .padding(bottom = 4.dp, start = 24.dp)
+                    .align(Alignment.Start),
+                text = "Please select a progress",
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         Spacer(modifier = Modifier.height(36.dp))
 
@@ -90,11 +136,17 @@ fun JournalCheckbox(
                 navController.popBackStack()
             },
             fillOnClick = {
-                checkBoxViewModel.mood = selectedMood
-                checkBoxViewModel.triggers = selectedTriggers
-                checkBoxViewModel.progress = selectedProgress
+                triggersError = selectedTriggers == null
+                moodError = selectedMood == null
+                progressError = selectedProgress == null
 
-                navController.navigate(WRITE_JOURNAL)
+                if (!triggersError && !moodError && !progressError) {
+                    checkBoxViewModel.mood = selectedMood
+                    checkBoxViewModel.triggers = selectedTriggers
+                    checkBoxViewModel.progress = selectedProgress
+
+                    navController.navigate(WRITE_JOURNAL)
+                }
             },
             txtFill = "Next"
         )
@@ -113,12 +165,12 @@ fun BoxCheckbox(
         text = title,
         style = MaterialTheme.typography.headlineMedium,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(start = 16.dp)
+        modifier = Modifier.padding(start = 18.dp, top = 6.dp)
     )
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 6.dp)
             .border(
                 2.dp,
                 color = MaterialTheme.colorScheme.primary,
@@ -140,5 +192,16 @@ fun BoxCheckbox(
 fun AddJournalCheckboxPreview() {
     ReLeafTheme {
 //        JournalCheckbox()
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun JournalCheckboxPreview() {
+    ReLeafTheme {
+        val navController = rememberNavController()
+        val checkBoxViewModel = remember { CheckBoxViewModel() }
+
+        JournalCheckbox(navController = navController, checkBoxViewModel = checkBoxViewModel)
     }
 }
