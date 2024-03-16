@@ -24,21 +24,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.releaf.releaf.components.CheckBox
 import com.releaf.releaf.components.OutFillBtn
 import com.releaf.releaf.components.WavyTitle
-import com.releaf.releaf.models.JournalCheckBoxModel
-import com.releaf.releaf.models.SharedViewModel
+import com.releaf.releaf.models.CheckBoxViewModel
 import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants.WRITE_JOURNAL
 
 @Composable
 fun JournalCheckbox(
     navController: NavHostController,
-    context: Context = LocalContext.current,
-    viewModel: SharedViewModel = viewModel()
+//    context: Context = LocalContext.current,
+    checkBoxViewModel: CheckBoxViewModel
 ) {
     val scrollState = rememberScrollState()
     var selectedTriggers by remember { mutableStateOf<String?>(null) }
@@ -92,13 +90,10 @@ fun JournalCheckbox(
                 navController.popBackStack()
             },
             fillOnClick = {
-                viewModel.setJournalChecksData(
-                    JournalCheckBoxModel(
-                        triggers = selectedTriggers,
-                        mood = selectedMood,
-                        progress = selectedProgress
-                    )
-                )
+                checkBoxViewModel.mood = selectedMood
+                checkBoxViewModel.triggers = selectedTriggers
+                checkBoxViewModel.progress = selectedProgress
+
                 navController.navigate(WRITE_JOURNAL)
             },
             txtFill = "Next"

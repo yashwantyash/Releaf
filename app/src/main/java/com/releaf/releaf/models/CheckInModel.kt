@@ -15,3 +15,5 @@ data class CheckInModel(
     val intention: String= "",
     val eveningSliderValue: Int? = null, // Null for morning
 )
+
+
