@@ -20,6 +20,6 @@ data class Journal(
     val description: String?
 )
 fun getCurrentDate():String{
-    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
-//    return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/mm/yyyy"))
+//    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
+    return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 }

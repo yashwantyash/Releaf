@@ -38,15 +38,8 @@ import kotlinx.coroutines.withContext
 fun JournalScreen(
     navController: NavController,
     context: Context = LocalContext.current
-//    journalViewModel: JournalViewModel = viewModel()
 ) {
-//    val journals = remember { journalViewModel.allJournals }
-////    val journals by journalViewModel.allJournals.observeAsState(initial = emptyList())
-////    val journals: List<Journal> by journalViewModel.allJournals.asFlow().collectAsState(initial = emptyList())
-//
-//    LaunchedEffect(key1 = true) {
-//        journalViewModel.getAllJournalByDate()
-//    }
+
     var db by remember { mutableStateOf<List<Journal>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -108,11 +101,3 @@ fun EachRow(
             .padding(vertical = 16.dp)
     )
 }
-
-//@Composable
-//@Preview
-//fun JournalScreenPreview() {
-//    ReLeafTheme {
-//        JournalScreen()
-//    }
-//}
