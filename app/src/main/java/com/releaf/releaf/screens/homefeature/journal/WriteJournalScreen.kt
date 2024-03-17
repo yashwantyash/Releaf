@@ -34,8 +34,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.components.WavyTitle
 import com.releaf.releaf.database.ReleafDatabase
-import com.releaf.releaf.models.CheckBoxViewModel
-import com.releaf.releaf.models.JournalModel
+import com.releaf.releaf.models.journal.CheckBoxViewModel
+import com.releaf.releaf.models.journal.Journal
 import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants.HOME
 import com.releaf.releaf.utility.Constants.JOURNAL
@@ -62,7 +62,7 @@ fun WriteJournal(
     var journalDescription by remember { mutableStateOf("") }
 
     val checkInDate: LocalDate = LocalDate.now()
-    val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
+    val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val formattedDate = checkInDate.format(dateFormatter)
 
     var moodError by remember { mutableStateOf(false) }
@@ -202,7 +202,7 @@ fun WriteJournal(
 
                 if (!moodError && !titleError && !descriptionError) {
 
-                    val newJournal = JournalModel(
+                    val newJournal = Journal(
                         date = formattedDate,
                         triggers = checkBoxViewModel.triggers,
                         mood = checkBoxViewModel.mood,

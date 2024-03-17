@@ -29,7 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.components.CheckBox
 import com.releaf.releaf.components.OutFillBtn
 import com.releaf.releaf.components.WavyTitle
-import com.releaf.releaf.models.CheckBoxViewModel
+import com.releaf.releaf.models.journal.CheckBoxViewModel
 import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants.WRITE_JOURNAL
 

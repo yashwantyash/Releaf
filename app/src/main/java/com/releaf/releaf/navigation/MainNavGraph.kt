@@ -33,7 +33,7 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
             ProgressScreen()
         }
         composable(route = JOURNAL) {
-            JournalScreen()
+            JournalScreen(navController)
         }
         composable(route = COMMUNITY) {
             CommunityScreen()

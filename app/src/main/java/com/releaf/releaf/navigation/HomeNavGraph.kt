@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.releaf.releaf.models.CheckBoxViewModel
+import com.releaf.releaf.models.journal.CheckBoxViewModel
 import com.releaf.releaf.screens.homefeature.journal.JournalCheckbox
 import com.releaf.releaf.screens.homefeature.DailyCheckIn
 import com.releaf.releaf.screens.homefeature.journal.WriteJournal
