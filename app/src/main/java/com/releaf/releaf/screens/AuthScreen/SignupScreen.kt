@@ -49,6 +49,7 @@ import com.releaf.releaf.components.MyInputField
 import com.releaf.releaf.components.MyNormalText
 import com.releaf.releaf.components.SignupBtn
 import com.releaf.releaf.components.UnderlinedText
+import com.releaf.releaf.components.WavyTitle
 import com.releaf.releaf.models.User
 import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants
@@ -73,38 +74,39 @@ fun SignupScreen(rootNavController: NavController, modifier: Modifier = Modifier
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.box),
-                contentDescription = null,
-                modifier = Modifier.fillMaxWidth(),
-//                .scale(scaleX = 1f, scaleY = 2f)
-            )
-
-
-            Spacer(modifier = Modifier.height(1.dp))
-            Image(
-                painter = painterResource(id = R.drawable.releaf_wave),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .rotate(180f)
-//                .scale(scaleX = 1f, scaleY = 2f)
-            )
+//
+//            Image(
+//                painter = painterResource(id = R.drawable.box),
+//                contentDescription = null,
+//                modifier = Modifier.fillMaxWidth(),
+////                .scale(scaleX = 1f, scaleY = 2f)
+//            )
+//
+//
+//            Spacer(modifier = Modifier.height(1.dp))
+//            Image(
+//                painter = painterResource(id = R.drawable.releaf_wave),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .rotate(180f)
+////                .scale(scaleX = 1f, scaleY = 2f)
+//            )
+            WavyTitle(title = "ReLeaf")
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp)
-                .align(Alignment.TopStart)
-        ) {
-            Text(
-                text = "ReLeaf",
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 16.dp, start = 16.dp)
+//                .align(Alignment.TopStart)
+//        ) {
+//            Text(
+//                text = "ReLeaf",
+//                style = MaterialTheme.typography.headlineLarge,
+//                fontWeight = FontWeight.Bold,
+//                color = Color.White
+//            )
+//        }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

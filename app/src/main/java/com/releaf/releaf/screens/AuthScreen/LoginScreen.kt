@@ -41,6 +41,7 @@ import com.releaf.releaf.components.MyInputField
 import com.releaf.releaf.components.MyNormalText
 import com.releaf.releaf.components.SigninBtn
 import com.releaf.releaf.components.UnderlinedText
+import com.releaf.releaf.components.WavyTitle
 import com.releaf.releaf.database.ReleafDatabase
 import com.releaf.releaf.models.User
 import com.releaf.releaf.ui.theme.ReLeafTheme
@@ -81,6 +82,7 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             LogoAndName(name)
             Spacer(modifier = Modifier.height(32.dp))
 
