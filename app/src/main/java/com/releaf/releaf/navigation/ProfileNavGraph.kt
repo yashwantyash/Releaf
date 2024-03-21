@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.releaf.releaf.screens.profilefeature.EditProfile
 import com.releaf.releaf.utility.Constants.EDIT_PROFILE
+import com.releaf.releaf.utility.Constants.PROFILE
 import com.releaf.releaf.utility.Constants.PROFILE_FEATURE_ROUTE
 
 fun NavGraphBuilder.profileNavGraph(

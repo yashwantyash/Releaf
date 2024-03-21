@@ -49,7 +49,7 @@ fun ProfileScreen(
 ) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-    var fullName by remember { mutableStateOf("Sadique Reyaz") }
+    var fullName by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
        val name  = withContext(Dispatchers.IO) {

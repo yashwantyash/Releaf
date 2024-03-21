@@ -26,7 +26,7 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
     NavHost(
         navController = navController,
         route = MAIN_ROUTE,
-        startDestination = PROFILE_FEATURE_ROUTE
+        startDestination = HOME
     ) {
         composable(route = HOME) {
             HomeScreen(navController = navController)

@@ -119,7 +119,7 @@ fun MyBottomBar(navController: NavHostController) {
                         Icon(
                             painterResource(screensListItem.icon),
                             contentDescription = null,
-                            modifier = Modifier.size(30.dp)
+                            modifier = Modifier.size(24.dp)
                         )
                     },
                     label = {
