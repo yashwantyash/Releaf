@@ -1,9 +1,7 @@
 package com.releaf.releaf.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,8 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -71,10 +67,13 @@ fun LogoAndName(name: String) {
 fun MyInputField(
     label: Int,
     leadIcon: ImageVector,
+    initialValue: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.Words,
     onValueChange: (String) -> Unit
 ) {
-    var textValue by remember { mutableStateOf("") }
+    var textValue by remember { mutableStateOf(initialValue) }
+
     OutlinedTextField(
         value = textValue,
         onValueChange = {
@@ -89,7 +88,7 @@ fun MyInputField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
-            capitalization = KeyboardCapitalization.None
+            capitalization = capitalization
         ),
         leadingIcon = {
             Icon(

@@ -204,6 +204,7 @@ fun WriteJournal(
                 color = MaterialTheme.colorScheme.error
             )
         }
+
         Spacer(modifier = Modifier.height(54.dp))
         Button(
             onClick = {

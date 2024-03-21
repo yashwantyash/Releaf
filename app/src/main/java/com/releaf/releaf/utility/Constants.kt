@@ -19,6 +19,9 @@ object Constants {
     const val WRITE_JOURNAL = "writeJournal"
     const val SUPPORT = "support"
 
+    const val PROFILE_FEATURE_ROUTE = "profileFeature"
+    const val EDIT_PROFILE = "editProfile"
+
     const val USER_TABLE = "User_Table"
     const val CHECKIN_TABLE = "CheckIn_Table"
     const val JOURNAL_TABLE = "Journal_Table"

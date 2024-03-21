@@ -69,8 +69,6 @@ fun JournalScreen(
                 modifier = Modifier.padding(bottom = 150.dp)
             ) {
                 items(journalList) { journal ->
-//
-
                     EachJournal(
                         trigger = journal.triggers.toString(),
                         mood = journal.mood.toString(),
@@ -82,6 +80,7 @@ fun JournalScreen(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(150.dp))
         } else {
 
             Image(

@@ -32,7 +32,6 @@ fun NavGraphBuilder.homeNavGraph(
             WriteJournal( navController = navController, checkBoxViewModel=checkBoxViewModel)
         }
         composable(route =  SUPPORT) {
-
         }
 
     }

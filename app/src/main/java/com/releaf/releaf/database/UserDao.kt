@@ -23,4 +23,7 @@ interface UserDao {
 
 //    @Query("SELECT * FROM USER_TABLE")
 //    fun getUser(): LiveData<List<UserRoom>>
+
+    @Query("SELECT fullName FROM USER_TABLE LIMIT 1")
+    suspend fun getFullName(): String
 }

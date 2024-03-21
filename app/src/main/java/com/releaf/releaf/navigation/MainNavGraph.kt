@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.releaf.releaf.navigation.homeNavGraph
+import com.releaf.releaf.navigation.profileNavGraph
 import com.releaf.releaf.screens.AuthScreen.LoginScreen
 import com.releaf.releaf.screens.BottomScreen.CommunityScreen
 import com.releaf.releaf.screens.BottomScreen.HomeScreen
@@ -45,5 +46,6 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
             LoginScreen(rootNavController = navController)
         }
         homeNavGraph(navController = navController)
+        profileNavGraph(navController = navController)
     }
 }
