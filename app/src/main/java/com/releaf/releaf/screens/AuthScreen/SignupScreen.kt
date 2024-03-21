@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -118,7 +119,8 @@ fun SignupScreen(rootNavController: NavController, modifier: Modifier = Modifier
             MyInputField(
                 label = R.string.fullname,
                 leadIcon = Icons.Default.Person,
-                keyboardType = KeyboardType.Text
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Words
             ) {
                 fullName = it
             }
@@ -138,7 +140,7 @@ fun SignupScreen(rootNavController: NavController, modifier: Modifier = Modifier
             MyInputField(
                 label = R.string.email,
                 leadIcon = Icons.Default.Email,
-                keyboardType = KeyboardType.Text
+                keyboardType = KeyboardType.Email,
             ) {
                 email = it
             }

@@ -69,7 +69,9 @@ fun MyInputField(
     leadIcon: ImageVector,
     initialValue: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
-    capitalization: KeyboardCapitalization = KeyboardCapitalization.Words,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
+    modifier: Modifier=Modifier
+        .fillMaxWidth(),
     onValueChange: (String) -> Unit
 ) {
     var textValue by remember { mutableStateOf(initialValue) }
@@ -80,8 +82,7 @@ fun MyInputField(
             textValue = it
             onValueChange(it)
         },
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         label = {
             Text(text = stringResource(label))
         },

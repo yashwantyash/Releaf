@@ -18,6 +18,7 @@ import com.releaf.releaf.utility.Constants.JOURNAL
 import com.releaf.releaf.utility.Constants.LOGIN
 import com.releaf.releaf.utility.Constants.MAIN_ROUTE
 import com.releaf.releaf.utility.Constants.PROFILE
+import com.releaf.releaf.utility.Constants.PROFILE_FEATURE_ROUTE
 import com.releaf.releaf.utility.Constants.PROGRESS
 
 @Composable
@@ -25,7 +26,7 @@ fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostCon
     NavHost(
         navController = navController,
         route = MAIN_ROUTE,
-        startDestination = HOME
+        startDestination = PROFILE_FEATURE_ROUTE
     ) {
         composable(route = HOME) {
             HomeScreen(navController = navController)
