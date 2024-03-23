@@ -4,15 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.releaf.releaf.models.Challenge
 import com.releaf.releaf.models.CheckInModel
+import com.releaf.releaf.models.Converters
 import com.releaf.releaf.models.journal.Journal
 import com.releaf.releaf.models.User
 
-@Database(entities = [User::class, CheckInModel::class, Journal::class], version = 3)
+@Database(entities = [User::class, CheckInModel::class, Journal::class, Challenge::class], version = 4)
+
+@TypeConverters(Converters::class)
 abstract class ReleafDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun dailyCheckInDao(): DailyCheckInDao
     abstract fun journalDao(): JournalDao
+    abstract val challengeDao: ChallengeDao
 
     companion object {
         private var DB_INSTANCE: ReleafDatabase? = null
@@ -29,8 +35,7 @@ abstract class ReleafDatabase : RoomDatabase() {
                         context.applicationContext,
                         ReleafDatabase::class.java,
                         "releaf_db"
-                    )
-                        .build()
+                    ).build()
                 }
             }
             return DB_INSTANCE!!

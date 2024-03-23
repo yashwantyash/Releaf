@@ -8,6 +8,7 @@ import com.releaf.releaf.models.journal.CheckBoxViewModel
 import com.releaf.releaf.screens.homefeature.journal.JournalCheckbox
 import com.releaf.releaf.screens.homefeature.DailyCheckIn
 import com.releaf.releaf.screens.homefeature.journal.WriteJournal
+import com.releaf.releaf.screens.homefeature.support.SupportTab
 import com.releaf.releaf.utility.Constants.ADD_JOURNAL_CHECKBOX
 import com.releaf.releaf.utility.Constants.CHECKIN
 import com.releaf.releaf.utility.Constants.HOME_FEAT_ROUTE
@@ -32,6 +33,7 @@ fun NavGraphBuilder.homeNavGraph(
             WriteJournal( navController = navController, checkBoxViewModel=checkBoxViewModel)
         }
         composable(route =  SUPPORT) {
+            SupportTab(navController = navController)
         }
 
     }

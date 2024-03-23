@@ -42,6 +42,7 @@ import com.releaf.releaf.R
 import com.releaf.releaf.theme.ReLeafTheme
 import com.releaf.releaf.utility.Constants.ADD_JOURNAL_CHECKBOX
 import com.releaf.releaf.utility.Constants.CHECKIN
+import com.releaf.releaf.utility.Constants.SUPPORT
 
 @Composable
 fun HomeScreen(
@@ -125,7 +126,9 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             HomeFeature(
-                onClick = {},
+                onClick = {
+                          navController.navigate(SUPPORT)
+                },
                 title = "Support",
                 subtitle = "Checkout available resources"
             )
