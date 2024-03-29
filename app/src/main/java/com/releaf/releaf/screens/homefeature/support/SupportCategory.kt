@@ -1,18 +1,14 @@
 package com.releaf.releaf.screens.homefeature.support
 
-import androidx.compose.foundation.Image
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -24,7 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,12 +28,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
+import com.releaf.releaf.components.SupportTabRow
 import com.releaf.releaf.theme.ReLeafTheme
 
 @Composable
 fun SupportTab(
-    navController: NavHostController
+    navController: NavHostController,
+
 ) {
+    val context = LocalContext.current
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf("Self Support", "External Support")
     val selfTabCardContent = listOf(
@@ -49,7 +48,7 @@ fun SupportTab(
     val externalTabCardContent = listOf(
         "Find a Therapist" to R.drawable.therapist,
         "Talk to someone now" to R.drawable.talk,
-        "SAMHSA" to R.drawable.samsha,
+        "SAMHSA" to R.drawable.guided,
         "Support group for SUD" to R.drawable.group,
         "American Addiction Center" to R.drawable.american_png,
         "Smart Recovery" to R.drawable.recovery
@@ -84,72 +83,66 @@ fun SupportTab(
             }
         }
         when (selectedTabIndex) {
-            0 -> TabContent(selfTabCardContent) { cardId ->
+            0 -> SupportTabRow(selfTabCardContent, /*context*/) { cardId ->
                 when (cardId) {
                     R.drawable.breathing -> { /* Handle breathing card click */
+                        openUrlInBrowser("", context)
                     }
 
                     R.drawable.yoga -> { /* Handle yoga card click */
+                        openUrlInBrowser("", context)
+
                     }
 
                     R.drawable.meditation -> { /* Handle meditation card click */
+                        openUrlInBrowser("", context)
+
                     }
 
                     R.drawable.cognitive -> { /* Handle cognitive card click */
+                        openUrlInBrowser("", context)
+
                     }
                 }
             }
 
-            1 -> TabContent(externalTabCardContent) { cardId ->
+            1 -> SupportTabRow(externalTabCardContent) { cardId ->
                 when (cardId) {
                     R.drawable.therapist -> { /* Handle therapist card click */
+                        openUrlInBrowser("https://www.betterhelp.com", context)
                     }
 
                     R.drawable.talk -> { /* Handle talk card click */
+                        openUrlInBrowser("https://988lifeline.org/talk-to-someone-now/", context)
+
                     }
 
-                    R.drawable.samsha -> { /* Handle SAMHSA card click */
+                    R.drawable.guided -> { /* Handle SAMHSA card click */
+                        openUrlInBrowser("https://www.samhsa.gov/find-help/national-helpline", context)
+
                     }
 
                     R.drawable.cognitive -> { /* Handle support group card click */
+                        openUrlInBrowser("https://www.nami.org/Home", context)
+
+                    }
+
+                    R.drawable.group -> { /* Handle SAMHSA card click */
+                        openUrlInBrowser("https://www.addictioncenter.com/treatment/support-groups/", context)
+
+                    }
+
+                    R.drawable.american_png -> { /* Handle support group card click */
+                        openUrlInBrowser("https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups", context)
+
+                    }
+
+                    R.drawable.recovery -> { /* Handle support group card click */
+                        openUrlInBrowser("https://www.smartrecovery.org", context)
+
                     }
                 }
 
-            }
-        }
-    }
-}
-
-@Composable
-fun TabContent(cardContent: List<Pair<String, Int>>, onCardClick: (Int) -> Unit) {
-    val scrollState = rememberScrollState()
-
-    cardContent.forEachIndexed { index, pair ->
-        Card(
-            modifier = Modifier
-                .fillMaxWidth().verticalScroll(scrollState)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onCardClick(pair.second) },
-            elevation = CardDefaults.cardElevation(4.dp)
-
-        ) {
-            Row(
-                modifier = Modifier.padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .padding(2.dp),
-                    painter = painterResource(id = pair.second),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = pair.first,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
             }
         }
     }
@@ -162,5 +155,15 @@ fun SupportTabPreview() {
         SupportTab(
             navController = rememberNavController()
         )
+    }
+}
+
+private fun openUrlInBrowser(url: String, context: Context) {
+    if (url.isNotEmpty()) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(intent)
+    }else
+    {
+        Toast.makeText(context, "No link found...", Toast.LENGTH_SHORT).show()
     }
 }

@@ -1,6 +1,7 @@
 package com.releaf.releaf.screens
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.filled.Add
 
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -36,7 +38,10 @@ import com.reyaz.bottomnavigation.BottomBarScreenObj
 import com.reyaz.bottomnavigation.MainNavGraph
 
 @Composable
-fun MainScreen(rootNavController : NavHostController, navController: NavHostController = rememberNavController() ) {
+fun MainScreen(
+    rootNavController : NavHostController,
+    navController: NavHostController = rememberNavController()
+) {
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
@@ -73,7 +78,9 @@ fun MainScreen(rootNavController : NavHostController, navController: NavHostCont
 }
 
 @Composable
-fun MyBottomBar(navController: NavHostController) {
+fun MyBottomBar(
+    navController: NavHostController
+) {
 
     var selectedIndex by remember {
         mutableIntStateOf(0)
@@ -94,6 +101,7 @@ fun MyBottomBar(navController: NavHostController) {
     if (bottomBarDestination) {
         NavigationBar(
         modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.surface)
             .padding(8.dp)
             .clip(RoundedCornerShape(12.dp)),
 //        containerColor = MaterialTheme.colorScheme.surface

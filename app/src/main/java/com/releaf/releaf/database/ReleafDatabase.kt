@@ -35,7 +35,9 @@ abstract class ReleafDatabase : RoomDatabase() {
                         context.applicationContext,
                         ReleafDatabase::class.java,
                         "releaf_db"
-                    ).build()
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return DB_INSTANCE!!

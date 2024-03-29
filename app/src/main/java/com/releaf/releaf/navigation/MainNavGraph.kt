@@ -22,7 +22,10 @@ import com.releaf.releaf.utility.Constants.PROFILE_FEATURE_ROUTE
 import com.releaf.releaf.utility.Constants.PROGRESS
 
 @Composable
-fun MainNavGraph(navController: NavHostController, navControllerAuth: NavHostController) {
+fun MainNavGraph(
+    navController: NavHostController,
+    navControllerAuth: NavHostController
+) {
     NavHost(
         navController = navController,
         route = MAIN_ROUTE,
