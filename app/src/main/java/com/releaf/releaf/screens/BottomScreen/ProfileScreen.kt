@@ -62,6 +62,7 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Top
     ) {

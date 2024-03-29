@@ -51,6 +51,7 @@ fun JournalCheckbox(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
             .verticalScroll(scrollState)
     ) {
         WavyTitle(title = "Journal")
@@ -177,7 +178,7 @@ fun BoxCheckbox(
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(4.dp)
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         CheckBox(
             optionsList,

@@ -182,7 +182,7 @@ fun HomeFeature(
             modifier = Modifier
                 .size(40.dp)
                 .clip(shape = CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer)
+                .background(MaterialTheme.colorScheme.tertiaryContainer)
                 .clickable { onClick() }
         )
     }

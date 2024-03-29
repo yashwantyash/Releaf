@@ -117,6 +117,7 @@ fun DailyCheckIn(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -138,7 +139,7 @@ fun DailyCheckIn(
                     clip = true
                     shadowElevation = 12f
                 }
-                .background(MaterialTheme.colorScheme.secondaryContainer),
+                .background(MaterialTheme.colorScheme.tertiaryContainer),
             contentAlignment = Alignment.Center
         ) {
             Row(

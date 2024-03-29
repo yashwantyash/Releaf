@@ -60,6 +60,7 @@ fun JournalScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
         /* .verticalScroll(scrollState)*/,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -86,7 +87,6 @@ fun JournalScreen(
         } else {
             Image(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
                     .padding(vertical = 16.dp, horizontal = 36.dp)
                     .graphicsLayer {
                         shape = RoundedCornerShape(12.dp)

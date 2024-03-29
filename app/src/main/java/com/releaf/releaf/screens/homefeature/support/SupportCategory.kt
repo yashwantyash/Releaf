@@ -7,8 +7,15 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -35,8 +42,9 @@ import com.releaf.releaf.theme.ReLeafTheme
 fun SupportTab(
     navController: NavHostController,
 
-) {
+    ) {
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf("Self Support", "External Support")
     val selfTabCardContent = listOf(
@@ -55,7 +63,12 @@ fun SupportTab(
 
     )
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -82,68 +95,98 @@ fun SupportTab(
                 )
             }
         }
-        when (selectedTabIndex) {
-            0 -> SupportTabRow(selfTabCardContent, /*context*/) { cardId ->
-                when (cardId) {
-                    R.drawable.breathing -> { /* Handle breathing card click */
-                        openUrlInBrowser("", context)
-                    }
+            when (selectedTabIndex) {
+                0 -> SupportTabRow(selfTabCardContent /*context*/) { cardId ->
+                    when (cardId) {
+                        R.drawable.breathing -> { /* Handle breathing card click */
+                            openUrlInBrowser("", context)
+                        }
 
-                    R.drawable.yoga -> { /* Handle yoga card click */
-                        openUrlInBrowser("", context)
+                        R.drawable.yoga -> { /* Handle yoga card click */
+                            openUrlInBrowser("", context)
 
-                    }
+                        }
 
-                    R.drawable.meditation -> { /* Handle meditation card click */
-                        openUrlInBrowser("", context)
+                        R.drawable.meditation -> { /* Handle meditation card click */
+                            openUrlInBrowser("", context)
 
-                    }
+                        }
 
-                    R.drawable.cognitive -> { /* Handle cognitive card click */
-                        openUrlInBrowser("", context)
+                        R.drawable.cognitive -> { /* Handle cognitive card click */
+                            openUrlInBrowser("", context)
 
-                    }
-                }
-            }
-
-            1 -> SupportTabRow(externalTabCardContent) { cardId ->
-                when (cardId) {
-                    R.drawable.therapist -> { /* Handle therapist card click */
-                        openUrlInBrowser("https://www.betterhelp.com", context)
-                    }
-
-                    R.drawable.talk -> { /* Handle talk card click */
-                        openUrlInBrowser("https://988lifeline.org/talk-to-someone-now/", context)
-
-                    }
-
-                    R.drawable.guided -> { /* Handle SAMHSA card click */
-                        openUrlInBrowser("https://www.samhsa.gov/find-help/national-helpline", context)
-
-                    }
-
-                    R.drawable.cognitive -> { /* Handle support group card click */
-                        openUrlInBrowser("https://www.nami.org/Home", context)
-
-                    }
-
-                    R.drawable.group -> { /* Handle SAMHSA card click */
-                        openUrlInBrowser("https://www.addictioncenter.com/treatment/support-groups/", context)
-
-                    }
-
-                    R.drawable.american_png -> { /* Handle support group card click */
-                        openUrlInBrowser("https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups", context)
-
-                    }
-
-                    R.drawable.recovery -> { /* Handle support group card click */
-                        openUrlInBrowser("https://www.smartrecovery.org", context)
-
+                        }
                     }
                 }
 
-            }
+                1 -> SupportTabRow(externalTabCardContent) { cardId ->
+                    when (cardId) {
+                        R.drawable.therapist -> { /* Handle therapist card click */
+                            openUrlInBrowser("https://www.betterhelp.com", context)
+                        }
+
+                        R.drawable.talk -> { /* Handle talk card click */
+                            openUrlInBrowser(
+                                "https://988lifeline.org/talk-to-someone-now/",
+                                context
+                            )
+
+                        }
+
+                        R.drawable.guided -> { /* Handle SAMHSA card click */
+                            openUrlInBrowser(
+                                "https://www.samhsa.gov/find-help/national-helpline",
+                                context
+                            )
+                        }
+
+                        R.drawable.cognitive -> { /* Handle support group card click */
+                            openUrlInBrowser("https://www.nami.org/Home", context)
+
+                        }
+
+                        R.drawable.group -> { /* Handle SAMHSA card click */
+                            openUrlInBrowser(
+                                "https://www.addictioncenter.com/treatment/support-groups/",
+                                context
+                            )
+
+                        }
+
+                        R.drawable.american_png -> { /* Handle support group card click */
+                            openUrlInBrowser(
+                                "https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups",
+                                context
+                            )
+                        }
+
+                        R.drawable.recovery -> { /* Handle support group card click */
+                            openUrlInBrowser("https://www.smartrecovery.org", context)
+
+                        }
+                    }
+                }
+        }
+        Spacer(modifier = Modifier.height(100.dp))
+    }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Button(
+            modifier = Modifier
+                .padding(bottom = 36.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 64.dp),
+            onClick = {
+                navController.popBackStack()
+            },
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text(
+                text = "Back"
+            )
+
         }
     }
 }
@@ -162,8 +205,7 @@ private fun openUrlInBrowser(url: String, context: Context) {
     if (url.isNotEmpty()) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
-    }else
-    {
+    } else {
         Toast.makeText(context, "No link found...", Toast.LENGTH_SHORT).show()
     }
 }
