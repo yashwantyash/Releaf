@@ -18,6 +18,7 @@ object Constants {
     const val ADD_JOURNAL_CHECKBOX = "addJournalCheckbox"
     const val WRITE_JOURNAL = "writeJournal"
     const val SUPPORT = "support"
+    const val CBT = "cbt_screen"
 
     const val PROFILE_FEATURE_ROUTE = "profileFeature"
     const val EDIT_PROFILE = "editProfile"

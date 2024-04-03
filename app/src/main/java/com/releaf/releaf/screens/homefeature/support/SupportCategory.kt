@@ -37,6 +37,8 @@ import androidx.navigation.compose.rememberNavController
 import com.releaf.releaf.R
 import com.releaf.releaf.components.SupportTabRow
 import com.releaf.releaf.theme.ReLeafTheme
+import com.releaf.releaf.utility.Constants.CBT
+import com.releaf.releaf.utility.Constants.LOGIN
 
 @Composable
 fun SupportTab(
@@ -84,94 +86,86 @@ fun SupportTab(
         }
 
         TabRow(
-            selectedTabIndex = selectedTabIndex,
-            modifier = Modifier.padding(bottom = 8.dp)
+            selectedTabIndex = selectedTabIndex, modifier = Modifier.padding(bottom = 8.dp)
         ) {
             tabTitles.forEachIndexed { index, title ->
-                Tab(
-                    selected = selectedTabIndex == index,
+                Tab(selected = selectedTabIndex == index,
                     onClick = { selectedTabIndex = index },
-                    text = { Text(text = title, fontWeight = FontWeight.Bold) }
-                )
+                    text = { Text(text = title, fontWeight = FontWeight.Bold) })
             }
         }
-            when (selectedTabIndex) {
-                0 -> SupportTabRow(selfTabCardContent /*context*/) { cardId ->
-                    when (cardId) {
-                        R.drawable.breathing -> { /* Handle breathing card click */
-                            openUrlInBrowser("", context)
-                        }
+        when (selectedTabIndex) {
+            0 -> SupportTabRow(selfTabCardContent /*context*/) { cardId ->
+                when (cardId) {
+                    R.drawable.breathing -> { /* Handle breathing card click */
+                        openUrlInBrowser("", context)
+                    }
 
-                        R.drawable.yoga -> { /* Handle yoga card click */
-                            openUrlInBrowser("", context)
+                    R.drawable.yoga -> { /* Handle yoga card click */
+                        openUrlInBrowser("", context)
 
-                        }
+                    }
 
-                        R.drawable.meditation -> { /* Handle meditation card click */
-                            openUrlInBrowser("", context)
+                    R.drawable.meditation -> { /* Handle meditation card click */
+                        openUrlInBrowser("", context)
 
-                        }
+                    }
 
-                        R.drawable.cognitive -> { /* Handle cognitive card click */
-                            openUrlInBrowser("", context)
-
-                        }
+                    R.drawable.cognitive -> { /* Handle cognitive card click */
+//                            openUrlInBrowser("", context)
+                        navController.navigate(CBT)
                     }
                 }
+            }
 
-                1 -> SupportTabRow(externalTabCardContent) { cardId ->
-                    when (cardId) {
-                        R.drawable.therapist -> { /* Handle therapist card click */
-                            openUrlInBrowser("https://www.betterhelp.com", context)
-                        }
+            1 -> SupportTabRow(externalTabCardContent) { cardId ->
+                when (cardId) {
+                    R.drawable.therapist -> { /* Handle therapist card click */
+                        openUrlInBrowser("https://www.betterhelp.com", context)
+                    }
 
-                        R.drawable.talk -> { /* Handle talk card click */
-                            openUrlInBrowser(
-                                "https://988lifeline.org/talk-to-someone-now/",
-                                context
-                            )
+                    R.drawable.talk -> { /* Handle talk card click */
+                        openUrlInBrowser(
+                            "https://988lifeline.org/talk-to-someone-now/", context
+                        )
 
-                        }
+                    }
 
-                        R.drawable.guided -> { /* Handle SAMHSA card click */
-                            openUrlInBrowser(
-                                "https://www.samhsa.gov/find-help/national-helpline",
-                                context
-                            )
-                        }
+                    R.drawable.guided -> { /* Handle SAMHSA card click */
+                        openUrlInBrowser(
+                            "https://www.samhsa.gov/find-help/national-helpline", context
+                        )
+                    }
 
-                        R.drawable.cognitive -> { /* Handle support group card click */
-                            openUrlInBrowser("https://www.nami.org/Home", context)
+                    R.drawable.cognitive -> { /* Handle support group card click */
+//                            openUrlInBrowser("https://www.nami.org/Home", context)
+                    }
 
-                        }
+                    R.drawable.group -> { /* Handle SAMHSA card click */
+                        openUrlInBrowser(
+                            "https://www.addictioncenter.com/treatment/support-groups/", context
+                        )
 
-                        R.drawable.group -> { /* Handle SAMHSA card click */
-                            openUrlInBrowser(
-                                "https://www.addictioncenter.com/treatment/support-groups/",
-                                context
-                            )
+                    }
 
-                        }
+                    R.drawable.american_png -> { /* Handle support group card click */
+                        openUrlInBrowser(
+                            "https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups",
+                            context
+                        )
+                    }
 
-                        R.drawable.american_png -> { /* Handle support group card click */
-                            openUrlInBrowser(
-                                "https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups",
-                                context
-                            )
-                        }
+                    R.drawable.recovery -> { /* Handle support group card click */
+                        openUrlInBrowser("https://www.smartrecovery.org", context)
 
-                        R.drawable.recovery -> { /* Handle support group card click */
-                            openUrlInBrowser("https://www.smartrecovery.org", context)
-
-                        }
                     }
                 }
+            }
         }
         Spacer(modifier = Modifier.height(100.dp))
     }
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
+        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter
     ) {
         Button(
             modifier = Modifier
