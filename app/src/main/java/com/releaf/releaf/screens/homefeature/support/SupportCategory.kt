@@ -86,86 +86,94 @@ fun SupportTab(
         }
 
         TabRow(
-            selectedTabIndex = selectedTabIndex, modifier = Modifier.padding(bottom = 8.dp)
+            selectedTabIndex = selectedTabIndex,
+            modifier = Modifier.padding(bottom = 8.dp)
         ) {
             tabTitles.forEachIndexed { index, title ->
-                Tab(selected = selectedTabIndex == index,
+                Tab(
+                    selected = selectedTabIndex == index,
                     onClick = { selectedTabIndex = index },
-                    text = { Text(text = title, fontWeight = FontWeight.Bold) })
+                    text = { Text(text = title, fontWeight = FontWeight.Bold) }
+                )
             }
         }
-        when (selectedTabIndex) {
-            0 -> SupportTabRow(selfTabCardContent /*context*/) { cardId ->
-                when (cardId) {
-                    R.drawable.breathing -> { /* Handle breathing card click */
-                        openUrlInBrowser("https://youtu.be/r85NsJ_pN_s?si=LsAmsu9cz0mt10fF", context)
-                    }
+            when (selectedTabIndex) {
+                0 -> SupportTabRow(selfTabCardContent /*context*/) { cardId ->
+                    when (cardId) {
+                        R.drawable.breathing -> { /* Handle breathing card click */
+                            openUrlInBrowser("", context)
+                        }
 
-                    R.drawable.yoga -> { /* Handle yoga card click */
-                        openUrlInBrowser("https://youtu.be/w0ICiGW78Sw?si=IYY_8x_L9dCwFpnO", context)
+                        R.drawable.yoga -> { /* Handle yoga card click */
+                            openUrlInBrowser("", context)
 
-                    }
+                        }
 
-                    R.drawable.meditation -> { /* Handle meditation card click */
-                        openUrlInBrowser("https://youtu.be/_NeCgJM5aTY?si=7cwQF8QQIM3JBtWR", context)
+                        R.drawable.meditation -> { /* Handle meditation card click */
+                            openUrlInBrowser("", context)
 
-                    }
+                        }
 
-                    R.drawable.cognitive -> { /* Handle cognitive card click */
-//                            openUrlInBrowser("", context)
-                        navController.navigate(CBT)
-                    }
-                }
-            }
+                        R.drawable.cognitive -> { /* Handle cognitive card click */
+                            openUrlInBrowser("", context)
 
-            1 -> SupportTabRow(externalTabCardContent) { cardId ->
-                when (cardId) {
-                    R.drawable.therapist -> { /* Handle therapist card click */
-                        openUrlInBrowser("https://www.betterhelp.com", context)
-                    }
-
-                    R.drawable.talk -> { /* Handle talk card click */
-                        openUrlInBrowser(
-                            "https://988lifeline.org/talk-to-someone-now/", context
-                        )
-
-                    }
-
-                    R.drawable.guided -> { /* Handle SAMHSA card click */
-                        openUrlInBrowser(
-                            "https://www.samhsa.gov/find-help/national-helpline", context
-                        )
-                    }
-
-                    R.drawable.cognitive -> { /* Handle support group card click */
-//                            openUrlInBrowser("https://www.nami.org/Home", context)
-                    }
-
-                    R.drawable.group -> { /* Handle SAMHSA card click */
-                        openUrlInBrowser(
-                            "https://www.addictioncenter.com/treatment/support-groups/", context
-                        )
-
-                    }
-
-                    R.drawable.american_png -> { /* Handle support group card click */
-                        openUrlInBrowser(
-                            "https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups",
-                            context
-                        )
-                    }
-
-                    R.drawable.recovery -> { /* Handle support group card click */
-                        openUrlInBrowser("https://www.smartrecovery.org", context)
-
+                        }
                     }
                 }
-            }
+
+                1 -> SupportTabRow(externalTabCardContent) { cardId ->
+                    when (cardId) {
+                        R.drawable.therapist -> { /* Handle therapist card click */
+                            openUrlInBrowser("https://www.betterhelp.com", context)
+                        }
+
+                        R.drawable.talk -> { /* Handle talk card click */
+                            openUrlInBrowser(
+                                "https://988lifeline.org/talk-to-someone-now/",
+                                context
+                            )
+
+                        }
+
+                        R.drawable.guided -> { /* Handle SAMHSA card click */
+                            openUrlInBrowser(
+                                "https://www.samhsa.gov/find-help/national-helpline",
+                                context
+                            )
+                        }
+
+                        R.drawable.cognitive -> { /* Handle support group card click */
+                            openUrlInBrowser("https://www.nami.org/Home", context)
+
+                        }
+
+                        R.drawable.group -> { /* Handle SAMHSA card click */
+                            openUrlInBrowser(
+                                "https://www.addictioncenter.com/treatment/support-groups/",
+                                context
+                            )
+
+                        }
+
+                        R.drawable.american_png -> { /* Handle support group card click */
+                            openUrlInBrowser(
+                                "https://americanaddictioncenters.org/therapy-treatment/aftercare-support-groups",
+                                context
+                            )
+                        }
+
+                        R.drawable.recovery -> { /* Handle support group card click */
+                            openUrlInBrowser("https://www.smartrecovery.org", context)
+
+                        }
+                    }
+                }
         }
         Spacer(modifier = Modifier.height(100.dp))
     }
     Box(
-        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
     ) {
         Button(
             modifier = Modifier
